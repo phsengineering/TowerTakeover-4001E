@@ -16,9 +16,7 @@ void autonomous() {
  void opcontrol() {
 	pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 	pros::lcd::initialize();
-	autoDrive(200);
-	pros::delay(2000);
-	autoDrive(0);
+	//autonhandler();
 	while(true) {
 		//Drive
 		int y = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
