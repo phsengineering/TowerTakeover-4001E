@@ -13,5 +13,5 @@ auto chassis = ChassisControllerFactory::create(
 
 
 void autonhandler() {
-  chassis.moveDistance(1000)
+  chassis.moveDistance(1000);
 }

@@ -20,7 +20,7 @@ void autonomous() {
 	while(true) {
 		//Drive
 		int y = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-		int r = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
+		int r = -mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
 
 		//Make r half as sensitive if not going forward or backward
 		if(std::abs(y) < 16)
