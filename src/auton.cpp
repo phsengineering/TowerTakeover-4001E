@@ -1,17 +1,14 @@
-#include "okapi/api.hpp"
-using namespace okapi;
-
-//const int[] DRIVE_MOTOR_LEFT = [3, 4];
-//const int[] DRIVE_MOTOR_RIGHT = [1, 2];
-const auto WHEEL_DIAMETER = 3.25_in;
-const auto CHASSIS_WIDTH = 13.25_in;
-auto chassis = ChassisControllerFactory::create(
-  {3, 4}, {1, 2},
-  AbstractMotor::gearset::red,
-  {WHEEL_DIAMETER, CHASSIS_WIDTH}
-);
-
-
+#include "main.h"
+#include "subsystems.hpp"
 void autonhandler() {
-  chassis.moveDistance(1000);
+  autoDrive(-200);
+  pros::delay(3000);
+  autoDrive(0);
+  pros::delay(100);
+  autoDrive(200);
+  pros::delay(1000);
+  autoDrive(0);
+  lift.move_velocity(80);
+  pros::delay(500);
+  lift.move_velocity(0);
 }
