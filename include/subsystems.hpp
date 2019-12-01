@@ -15,3 +15,6 @@ void intakeHandler(int speed);
 void trayHandler(int trayPos);
 void liftHandler(int liftInput);
 void autoDrive(int x);
+// void clearDrive();
+// void smartDrive(int speed, double fPoint)
+// double obtainPositionF();
