@@ -28,20 +28,6 @@ void autonomous() {
 			r = 127.0 * std::copysign(std::pow(std::abs(r / 127.0), 1.4 ), r);
 		}
 		drive(y, r);
-		if(mainController.get_digital(E_CONTROLLER_DIGITAL_A))
-		{
-			driveLF.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-			driveLB.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-			driveRF.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-			driveRB.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-		}
-		else
-		{
-			driveLF.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-			driveLB.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-			driveRF.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-			driveRB.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-		}
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R1)) {
 			intakeHandler(190);
 		}
@@ -52,10 +38,10 @@ void autonomous() {
 			intakeHandler(0);
 		}
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-			liftHandler(94.48);
+			liftHandler(120);
 		}
 		else if(mainController.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-			liftHandler(-94.48);
+			liftHandler(-120);
 		}
 		else {
 			liftHandler(0);
