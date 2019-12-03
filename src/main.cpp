@@ -45,7 +45,7 @@ void autonomous() {
 		}
 		else {
 			liftHandler(0);
-			lift.set_brake_mode(E_MOTOR_BRAKE_COAST);
+			lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 		}
 		int trayPos = mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		trayHandler(trayPos);
