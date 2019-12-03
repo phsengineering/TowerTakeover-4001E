@@ -29,10 +29,10 @@ void autonomous() {
 		}
 		drive(y, r);
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			intakeHandler(190);
+			intakeHandler(185);
 		}
 		else if (mainController.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			intakeHandler(-190);
+			intakeHandler(-185);
 		}
 		else {
 			intakeHandler(0);
