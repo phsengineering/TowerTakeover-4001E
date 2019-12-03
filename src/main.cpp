@@ -52,14 +52,14 @@ void autonomous() {
 			intakeHandler(0);
 		}
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-			liftHandler(95);
+			liftHandler(94.48);
 		}
 		else if(mainController.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-			liftHandler(-95);
+			liftHandler(-94.48);
 		}
 		else {
 			liftHandler(0);
-			lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+			lift.set_brake_mode(E_MOTOR_BRAKE_COAST);
 		}
 		int trayPos = mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		trayHandler(trayPos);
