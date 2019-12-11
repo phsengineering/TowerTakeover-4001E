@@ -51,6 +51,8 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		}
 		else if(mainController.get_digital(E_CONTROLLER_DIGITAL_L2)) {
 			liftHandler(-130);
+		} else if (mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {
+
 		}
 		else {
 			liftHandler(0);

@@ -1,14 +1,4 @@
 /*
-
-Hello Gabe,
-
-Today I attempted to do auton and made some progress. Right now it drives forward while intaking, picks up 5 cubes then drives back and hits the wall.
-It's only using autoDrive(number of milliseconds) to move forward and back so right now it's an open loop system with no encoder read-outs or detection of anything.
-
-This is obviously going to have to change in order to have a fully robust auton. Ethan said I should try the Okapi Library because it helps to make the bot
-perform turns in degrees and other closed loop functions. I tried the turning and drive forward [certain distance and angle] but the bot just spun forever and
-tried to fix but couldn't get it to work by end of club.
-
 Here's a doc on Okapi auton:
 https://pros.cs.purdue.edu/v5/okapi/tutorials/walkthrough/autonomous-movement-basic.html
 
@@ -31,6 +21,23 @@ luke
 
 #include "main.h"
 #include "subsystems.hpp"
+
+
+void driveEncoderTicks (int ticks, int speed) {
+
+  while (driveRF.get_position() < ticks) {
+    driveRB.move_velocity(speed);
+    driveRF.move_velocity(speed);
+    driveLB.move_velocity(speed);
+    driveLF.move_velocity(speed);
+  }
+
+  driveRF.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveLF.move_velocity(0);
+}
+
 
 void driveEncoderInches (int inches, int speed) {
   int ticks = inches*88;
@@ -64,22 +71,77 @@ void turnEncoderTicks (double ticks, int speed) {
   driveRF.move_velocity(0);
 }
 
+void autoDriveSlightLeft (int speed, double offset) {
+  double faster = offset * speed;
+  driveLF.move_velocity(speed);
+  driveLB.move_velocity(speed);
+  driveRF.move_velocity(faster);
+  driveRB.move_velocity(faster);
+}
+
 void autonhandler() {
 
-//  turnEncoderTicks(2.5, 75);  //turn using encoder values testing
+//  turnEncoderTicks(3.5, 125);  //turn using encoder values testing
+/*
 
+  turnEncoderTicks(4, 125);  //turn using encoder values
 
-//driveEncoderInches(-10, 200);
-//pros::delay(1000);
-//driveEncoderInches(10, 200);
+  autoDrive(150); // drive forward to stacking area
+  intakeHandler(-20);
+  pros::delay(2500);
+  autoDrive(0); //stop drive
 
-    trayHandler(120); //flip out
+  trayHandler(180); // deploy tray to stack cubes
+  pros::delay(400);
+  intakeHandler(0);
+  pros::delay(1700);
+  trayHandler(-70); //retract lift while moving backwards
+
+  pros::delay(500);
+  trayHandler(0); //stop lift
+  autoDrive(-100);
+
+  pros::delay(1000);
+  autoDrive(0); // stop all & win auton
+
+*/
+
+    intakeHandler(-170); //flip out
+    trayHandler(120);
+    liftHandler(150);
+    pros::delay(800);
+    trayHandler(-150);
+    liftHandler(-150);
+    pros::delay(1000);
+    liftHandler(-130);
     pros::delay(500);
-    trayHandler(0);
+    intakeHandler(-100);
 
-    intakeHandler(170); //start intake
-    autoDrive(200); // drive to pick up cubes
+    intakeHandler(140); //start intake
+    autoDriveSlightLeft(200, 1.1); // drive forward to recenter
+    pros::delay(1000);
+    autoDrive(-200); // drive back into wall
+    pros::delay(1000);
+
+    /*
+
+    intakeHandler(140); //start intake
+    autoDriveSlightLeft(200, 1.1); // drive forward to recenter
+    pros::delay(1000);
+    autoDrive(-200); // drive back into wall
+    pros::delay(200);
+    autoDrive(200);
+    pros::delay(200);
+    autoDrive(-200);
+    pros::delay(1000);
+
+    */
+
+    autoDriveSlightLeft(200, 1.075); // drive to pick up cubes
+
     pros::delay(3350);
+    liftHandler(0);
+    trayHandler(0);
 
     autoDrive(0); //stop for a little
     pros::delay(200);
@@ -89,22 +151,27 @@ void autonhandler() {
     pros::delay(3750);
     autoDrive(0); //stop
 
-    turnEncoderTicks(2.5, 75);  //turn using encoder values
+    turnEncoderTicks(3.35, 125);  //turn using encoder values
 
-    autoDrive(100); // drive forward to stacking area
-    pros::delay(2000);
+    autoDrive(175); // drive forward to stacking area
+    intakeHandler(-20);
+    pros::delay(2500);
     autoDrive(0); //stop drive
 
-    trayHandler(130); // deploy lift to stack cubes
-    pros::delay(2000);
-    trayHandler(-120); //retract lift while moving backwards
-    autoDrive(-100);
+    trayHandler(180); // deploy tray to stack cubes
+    pros::delay(400);
+    intakeHandler(0);
+    pros::delay(1700);
+    trayHandler(-70); //retract lift while moving backwards
 
     pros::delay(500);
     trayHandler(0); //stop lift
+    autoDrive(-100);
 
-    pros::delay(2000);
+    pros::delay(1000);
     autoDrive(0); // stop all & win auton
+
+
 
 }
 
