@@ -21,7 +21,7 @@ chassis.turnAngle(90_deg);
 Not specifically related to Okapi but for motor encoders:
 
 1800 ticks/rev with 36:1 gears
-900 ticks/rev with 18:1 gears
+900 ticks/rev with 18:1 gears This is what we have
 300 ticks/rev with 6:1 gears
 
 
@@ -32,25 +32,52 @@ luke
 #include "main.h"
 #include "subsystems.hpp"
 
-#include "okapi/api.hpp"
+void driveEncoderInches (int inches, int speed) {
+  int ticks = inches*88;
+  int highTolerance = ticks + 5;
+  int lowTolerance = ticks - 5;
 
-using namespace okapi;
+  while (driveRF.get_position() < ticks) {
+    driveRB.move_velocity(speed);
+    driveRF.move_velocity(speed);
+    driveLB.move_velocity(speed);
+    driveLF.move_velocity(speed);
+  }
 
-const int DRIVE_MOTOR_RIGHT = 20; // need to figure out how to assign 2 motors to right and left
-const int DRIVE_MOTOR_LEFT = 16;
+  driveRF.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveLF.move_velocity(0);
+}
 
-const auto WHEEL_DIAMETER = 3.25_in;
-const auto CHASSIS_WIDTH = 15_in;
+void turnEncoderTicks (double ticks, int speed) {
 
-auto chassis = ChassisControllerFactory::create(DRIVE_MOTOR_LEFT, DRIVE_MOTOR_RIGHT);
+  while(driveRF.get_position() < ticks) {
+    driveLF.move_velocity(-speed);
+    driveLB.move_velocity(-speed);
+    driveRB.move_velocity(speed);
+    driveRF.move_velocity(speed);
+  }
+  driveLF.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveRF.move_velocity(0);
+}
 
 void autonhandler() {
 
-  liftHandler(120); //flip out
-  pros::delay(500);
-  liftHandler(0);
+//  turnEncoderTicks(2.5, 75);  //turn using encoder values testing
 
-    intakeHandler(180); //start intake
+
+//driveEncoderInches(-10, 200);
+//pros::delay(1000);
+//driveEncoderInches(10, 200);
+
+    trayHandler(120); //flip out
+    pros::delay(500);
+    trayHandler(0);
+
+    intakeHandler(170); //start intake
     autoDrive(200); // drive to pick up cubes
     pros::delay(3350);
 
@@ -59,7 +86,54 @@ void autonhandler() {
     intakeHandler(0); //stop intake
 
     autoDrive(-200); //backwards drive
-    pros:delay(3750);
+    pros::delay(3750);
     autoDrive(0); //stop
 
+    turnEncoderTicks(2.5, 75);  //turn using encoder values
+
+    autoDrive(100); // drive forward to stacking area
+    pros::delay(2000);
+    autoDrive(0); //stop drive
+
+    trayHandler(130); // deploy lift to stack cubes
+    pros::delay(2000);
+    trayHandler(-120); //retract lift while moving backwards
+    autoDrive(-100);
+
+    pros::delay(500);
+    trayHandler(0); //stop lift
+
+    pros::delay(2000);
+    autoDrive(0); // stop all & win auton
+
 }
+
+
+
+/*  OLD TURNING SYSTEM
+
+  driveRF.move_velocity(200); //use rigt front wheel drive to turn against wall
+  driveLB.move_velocity(-200);
+  pros::delay(1500);
+  driveRF.move_velocity(0); //stop turns
+  driveLB.move_velocity(0);
+
+*/
+
+
+
+
+//Before Arjun bestowed his wisdom upon us
+
+/*int highTolerance = ticks + 5;
+int lowTolerance = ticks - 5;
+
+driveRF.move_absolute(ticks, speed);
+
+while (!((driveRF.get_position() < highTolerance) && (driveRF.get_position() > lowTolerance))) {
+    pros::delay(2);
+}
+
+driveRF.tare_position();
+
+*/

@@ -19,6 +19,14 @@ void autonomous() {
 	autonhandler();
 	while(true) {
 		//Drive
+
+		/*
+		std::cout << "RF Motor Position: " << driveRF.get_position();
+		std::cout << "LF Motor Position: " << driveLF.get_position();
+		std::cout << "RB Motor Position: " << driveRB.get_position();
+		std::cout << "LB Motor Position: " << driveLB.get_position();
+		*/
+printf("Left encoder front: %d\n", driveLF.get_position());
 		int y = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 		int r = mainController.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
 
@@ -29,19 +37,20 @@ void autonomous() {
 		}
 		drive(y, r);
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			intakeHandler(185);
+			intakeHandler(150);
 		}
 		else if (mainController.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			intakeHandler(-185);
+			intakeHandler(-150);
 		}
 		else {
 			intakeHandler(0);
 		}
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-			liftHandler(120);
+			liftHandler(130);
+
 		}
 		else if(mainController.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-			liftHandler(-120);
+			liftHandler(-130);
 		}
 		else {
 			liftHandler(0);
@@ -49,5 +58,16 @@ void autonomous() {
 		}
 		int trayPos = mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		trayHandler(trayPos);
+		if(mainController.get_digital(E_CONTROLLER_DIGITAL_X)) { // lift cube macro (yes it's time based, i know, it sucks)
+			liftHandler(130);
+			pros::delay(500);
+			trayHandler(130);
+			pros::delay(1000);
+			trayHandler(0);
+			liftHandler(0);
+			lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+		} else if(mainController.get_digital(E_CONTROLLER_DIGITAL_B)) {
+			// macro down
+		}
 	}
  }
