@@ -23,7 +23,7 @@ luke
 #include "subsystems.hpp"
 
 
-void driveEncoderTicks (int ticks, int speed) {
+void driveEncoderTicks (int ticks, int speed) { //drive in ticks
 
   while (driveRF.get_position() < ticks) {
     driveRB.move_velocity(speed);
@@ -39,7 +39,7 @@ void driveEncoderTicks (int ticks, int speed) {
 }
 
 
-void driveEncoderInches (int inches, int speed) {
+void driveEncoderInches (int inches, int speed) { // drive in inches?
   int ticks = inches*88;
   int highTolerance = ticks + 5;
   int lowTolerance = ticks - 5;
@@ -57,7 +57,7 @@ void driveEncoderInches (int inches, int speed) {
   driveLF.move_velocity(0);
 }
 
-void turnEncoderTicks (double ticks, int speed) {
+void turnEncoderTicks (double ticks, int speed) { //turn in ticks
 
   while(driveRF.get_position() < ticks) {
     driveLF.move_velocity(-speed);
@@ -71,7 +71,7 @@ void turnEncoderTicks (double ticks, int speed) {
   driveRF.move_velocity(0);
 }
 
-void autoDriveSlightLeft (int speed, double offset) {
+void autoDriveSlightLeft (int speed, double offset) { //auto drive but turns slightly to the left
   double faster = offset * speed;
   driveLF.move_velocity(speed);
   driveLB.move_velocity(speed);
@@ -79,32 +79,9 @@ void autoDriveSlightLeft (int speed, double offset) {
   driveRB.move_velocity(faster);
 }
 
-void autonhandler() {
+void autonhandler() { // auton main
 
 //  turnEncoderTicks(3.5, 125);  //turn using encoder values testing
-/*
-
-  turnEncoderTicks(4, 125);  //turn using encoder values
-
-  autoDrive(150); // drive forward to stacking area
-  intakeHandler(-20);
-  pros::delay(2500);
-  autoDrive(0); //stop drive
-
-  trayHandler(180); // deploy tray to stack cubes
-  pros::delay(400);
-  intakeHandler(0);
-  pros::delay(1700);
-  trayHandler(-70); //retract lift while moving backwards
-
-  pros::delay(500);
-  trayHandler(0); //stop lift
-  autoDrive(-100);
-
-  pros::delay(1000);
-  autoDrive(0); // stop all & win auton
-
-*/
 
     intakeHandler(-170); //flip out
     trayHandler(120);
@@ -115,14 +92,14 @@ void autonhandler() {
     pros::delay(1000);
     liftHandler(-130);
     pros::delay(500);
-    intakeHandler(-100);
 
     intakeHandler(140); //start intake
+    /*
     autoDriveSlightLeft(200, 1.1); // drive forward to recenter
     pros::delay(1000);
     autoDrive(-200); // drive back into wall
     pros::delay(1000);
-
+    */
     /*
 
     intakeHandler(140); //start intake
@@ -137,29 +114,27 @@ void autonhandler() {
 
     */
 
-    autoDriveSlightLeft(200, 1.075); // drive to pick up cubes
+    autoDriveSlightLeft(200, 1.03); // drive to pick up cubes
 
-    pros::delay(3350);
+    pros::delay(3600);
     liftHandler(0);
     trayHandler(0);
-
-    autoDrive(0); //stop for a little
-    pros::delay(200);
-    intakeHandler(0); //stop intake
+    pros::delay(150);
+    intakeHandler(0);
 
     autoDrive(-200); //backwards drive
-    pros::delay(3750);
+    pros::delay(3500);
     autoDrive(0); //stop
 
-    turnEncoderTicks(3.35, 125);  //turn using encoder values
+    turnEncoderTicks(3.3, 125);  //turn using encoder values
 
-    autoDrive(175); // drive forward to stacking area
+    autoDrive(150); // drive forward to stacking area
     intakeHandler(-20);
-    pros::delay(2500);
+    pros::delay(1500);
     autoDrive(0); //stop drive
 
     trayHandler(180); // deploy tray to stack cubes
-    pros::delay(400);
+    pros::delay(450);
     intakeHandler(0);
     pros::delay(1700);
     trayHandler(-70); //retract lift while moving backwards
@@ -170,9 +145,6 @@ void autonhandler() {
 
     pros::delay(1000);
     autoDrive(0); // stop all & win auton
-
-
-
 }
 
 
@@ -186,9 +158,6 @@ void autonhandler() {
   driveLB.move_velocity(0);
 
 */
-
-
-
 
 //Before Arjun bestowed his wisdom upon us
 
