@@ -16,7 +16,8 @@ void autonomous() {
  void opcontrol() {
 	pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 	pros::lcd::initialize();
-	autonhandler();
+	lift.set_brake_mode(MOTOR_BRAKE_HOLD);
+	tray.set_brake_mode(MOTOR_BRAKE_COAST);
 	while(true) {
 		//Drive
 
@@ -37,15 +38,36 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		}
 		drive(y, r);
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			intakeHandler(150);
+			intakeHandler(130);
 		}
 		else if (mainController.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			intakeHandler(-150);
+			intakeHandler(-130);
 		}
 		else {
 			intakeHandler(0);
 		}
+
+//TRAY MACROS--------------------------------
+	if(mainController.get_digital(DIGITAL_L1)){ //mid tower
+		tray.move_absolute(750, 100);
+		delay(100);
+		lift.move_absolute(575, -80);
+	}
+
+	if(mainController.get_digital(DIGITAL_L2)){ //low tower
+		tray.move_absolute(800, 100);
+		delay(100);
+		lift.move_absolute(400, -80);
+	}
+
+	if(mainController.get_digital(DIGITAL_A)){ //resting position
+		tray.move_absolute(0, -100);
+		lift.move_absolute(0, -80);
+	}
+
+	/*
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {
+			lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 			liftHandler(130);
 
 		}
@@ -56,8 +78,9 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		}
 		else {
 			liftHandler(0);
-			lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 		}
+*/
+
 		int trayPos = mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		trayHandler(trayPos);
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_X)) { // lift cube macro (yes it's time based, i know, it sucks)
