@@ -118,36 +118,51 @@ auto myChassis = ChassisControllerFactory::create(
 
 
 void autonhandler() { // auton main
+
+//myChassis.turnAngle(20.8_deg);
+
+  pros::delay(100);
   intakeHandler(120); //start intake
   myChassis.moveDistance(1.65_in);
   myChassis.waitUntilSettled();
-  pros::delay(500);
+  pros::delay(1000);
   intakeHandler(0);
-  myChassis.moveDistance(-1.3_in);
+  myChassis.moveDistance(-1.5_in);
   myChassis.waitUntilSettled();
+  myChassis.stop();
+  driveLF.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveRF.move_velocity(0);
+  pros::delay(400);
 
   myChassis.setMaxVelocity(100);
-  myChassis.turnAngle(20_deg);
+  myChassis.turnAngle(21_deg);
   myChassis.waitUntilSettled();
   myChassis.stop();
 
 //driveRightTest(4.9, 175);
 
   autoDrive(150); // drive forward to stacking area
-  intakeHandler(-20);
-  pros::delay(600);
+  intakeHandler(-35);
+  pros::delay(1100);
   autoDrive(0); //stop drive
 
   trayHandler(210); // deploy tray to stack cubes
   pros::delay(450);
+  intakeHandler(-30);
+  pros::delay(1000);
+  autoDrive(-50);
   intakeHandler(-50);
-  pros::delay(1700);
+  pros::delay(700);
   trayHandler(-70);
 
   trayHandler(0); //stop lift
-  autoDrive(-100);
+  autoDrive(-200);
+  pros::delay(250);
+  intakeHandler(0);
 
-  pros::delay(1000);
+  pros::delay(1500);
   autoDrive(0); // stop all & win auton
 
 /*
