@@ -123,15 +123,15 @@ void autonhandler() { // auton main
   myChassis.waitUntilSettled();
   pros::delay(500);
   intakeHandler(0);
-  myChassis.moveDistance(-1.66_in);
+  myChassis.moveDistance(-1.3_in);
   myChassis.waitUntilSettled();
 
-//  myChassis.setMaxVelocity(100);
-//  myChassis.turnAngle(20_deg);
-//  myChassis.waitUntilSettled();
-//  myChassis.stop();
+  myChassis.setMaxVelocity(100);
+  myChassis.turnAngle(20_deg);
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-driveRightTest(4.9, 175);
+//driveRightTest(4.9, 175);
 
   autoDrive(150); // drive forward to stacking area
   intakeHandler(-20);
