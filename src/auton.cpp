@@ -11,9 +11,11 @@ Not specifically related to Okapi but for motor encoders:
 hope this helps,
 luke
 */
-
 #include "main.h"
 #include "subsystems.hpp"
+#include "okapi/api.hpp"
+
+using namespace okapi;
 
 void driveEncoderTicks (int ticks, int speed) { //drive in ticks
 
@@ -22,6 +24,21 @@ void driveEncoderTicks (int ticks, int speed) { //drive in ticks
     driveRF.move_velocity(speed);
     driveLB.move_velocity(speed);
     driveLF.move_velocity(speed);
+  }
+
+  driveRF.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveLF.move_velocity(0);
+}
+
+void driveRightTest (double ticks, int speed) { //drive in ticks
+
+  while (driveRF.get_position() < ticks) {
+    driveRB.move_velocity(speed);
+    driveRF.move_velocity(speed);
+    driveLB.move_velocity(-speed/4);
+    driveLF.move_velocity(-speed/4);
   }
 
   driveRF.move_velocity(0);
@@ -92,9 +109,48 @@ void autoDriveSlightRight (int speed, double offset) { //auto drive but turns sl
   driveRB.move_velocity(speed);
 }
 
+auto myChassis = ChassisControllerFactory::create(
+  {19, 20}, // Left motors
+  {15, 16},   // Right motors
+  AbstractMotor::gearset::green, // Torque gearset
+  {3.25_in, 8_in} //wheels, wheelbase width
+);
+
+
 void autonhandler() { // auton main
+  intakeHandler(120); //start intake
+  myChassis.moveDistance(1.65_in);
+  myChassis.waitUntilSettled();
+  pros::delay(500);
+  intakeHandler(0);
+  myChassis.moveDistance(-1.66_in);
+  myChassis.waitUntilSettled();
 
+//  myChassis.setMaxVelocity(100);
+//  myChassis.turnAngle(20_deg);
+//  myChassis.waitUntilSettled();
+//  myChassis.stop();
 
+driveRightTest(4.9, 175);
+
+  autoDrive(150); // drive forward to stacking area
+  intakeHandler(-20);
+  pros::delay(600);
+  autoDrive(0); //stop drive
+
+  trayHandler(210); // deploy tray to stack cubes
+  pros::delay(450);
+  intakeHandler(-50);
+  pros::delay(1700);
+  trayHandler(-70);
+
+  trayHandler(0); //stop lift
+  autoDrive(-100);
+
+  pros::delay(1000);
+  autoDrive(0); // stop all & win auton
+
+/*
 // 1 cube drive forward/back
 
   autoDrive(-200);
@@ -115,8 +171,6 @@ void autonhandler() { // auton main
   pros::delay(500);
   intakeHandler(0);
 
-
-/*
   // 5 cube attempt (Worked once)
     intakeHandler(-170); //flip out
     trayHandler(120);

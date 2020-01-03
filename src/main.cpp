@@ -38,10 +38,10 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		}
 		drive(y, r);
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			intakeHandler(130);
+			intakeHandler(195);
 		}
 		else if (mainController.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-			intakeHandler(-130);
+			intakeHandler(-195);
 		}
 		else {
 			intakeHandler(0);
