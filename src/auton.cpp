@@ -13,8 +13,6 @@ auto myChassis = ChassisControllerFactory::create(
 
 void autonhandler() { // auton main
 
-//myChassis.turnAngle(20.8_deg);
-
   pros::delay(100);
   intakeHandler(200); //start intake
   myChassis.moveDistance(1.65_in);
@@ -34,8 +32,6 @@ void autonhandler() { // auton main
   myChassis.turnAngle(21_deg);
   myChassis.waitUntilSettled();
   myChassis.stop();
-
-//driveRightTest(4.9, 175);
 
   autoDrive(150); // drive forward to stacking area
   intakeHandler(-35);
