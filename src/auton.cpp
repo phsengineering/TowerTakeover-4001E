@@ -11,15 +11,33 @@ auto myChassis = ChassisControllerFactory::create(
   {3.25_in, 8_in} //wheels, wheelbase width
 );
 
+auto profileController = AsyncControllerFactory::motionProfile(
+  2.5,  // Maximum linear velocity of the Chassis in m/s
+  2.0,  // Maximum linear acceleration of the Chassis in m/s/s
+  10.0, // Maximum linear jerk of the Chassis in m/s/s/s
+  myChassis // Chassis Controller
+);
+
 void autonhandler() { // auton main
 
-  pros::delay(100);
-  intakeHandler(200); //start intake
-  myChassis.moveDistance(1.65_in);
+//myChassis.turnAngle(20.8_deg);
+  myChassis.setMaxVelocity(200);
+
+  pros::delay(10);
+  intakeHandler(140);
+
+  myChassis.moveDistance(1.67_in);
   myChassis.waitUntilSettled();
+
+/*
+  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.139166_ft, 0_ft, 0_deg}}, "A");
+  profileController.setTarget("A");
+  profileController.waitUntilSettled();
+*/
+
   pros::delay(1000);
   intakeHandler(0);
-  myChassis.moveDistance(-1.5_in);
+  myChassis.moveDistance(-1.52_in);
   myChassis.waitUntilSettled();
   myChassis.stop();
   driveLF.move_velocity(0);
@@ -28,22 +46,26 @@ void autonhandler() { // auton main
   driveRF.move_velocity(0);
   pros::delay(400);
 
-  myChassis.setMaxVelocity(100);
-  myChassis.turnAngle(21_deg);
+  myChassis.turnAngle(21.2_deg);
   myChassis.waitUntilSettled();
   myChassis.stop();
 
+//driveRightTest(4.9, 175);
+
   autoDrive(150); // drive forward to stacking area
   intakeHandler(-35);
-  pros::delay(1100);
+  pros::delay(1000);
+
+  autoDrive(250); // jerk forward to better stack cubes
+  pros::delay(100);
   autoDrive(0); //stop drive
 
   trayHandler(210); // deploy tray to stack cubes
-  pros::delay(450);
-  intakeHandler(-30);
-  pros::delay(1000);
-  autoDrive(-50);
+  pros::delay(400);
   intakeHandler(-50);
+  pros::delay(1000);
+  autoDrive(-60);
+  intakeHandler(-65);
   pros::delay(700);
   trayHandler(-70);
 
