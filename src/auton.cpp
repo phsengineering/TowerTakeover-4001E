@@ -19,38 +19,83 @@ auto profileController = AsyncControllerFactory::motionProfile(
 );
 
 void autonhandler() { // auton main
+//Normal Flipout
+  intakeHandler(-200);
+  trayHandler(120);
 
-//myChassis.turnAngle(20.8_deg);
-  myChassis.setMaxVelocity(200);
+  tray.move_absolute(750, 100);
+  delay(100);
+  lift.move_absolute(675, -100);
 
-  pros::delay(10);
-  intakeHandler(140);
+  pros::delay(700);
+  intakeHandler(0);
+  pros::delay(600);
+  trayHandler(-150);
+  liftHandler(-130);
+  pros::delay(750);
+  trayHandler(0);
+//Normal Flipout
 
-  myChassis.moveDistance(1.67_in);
+
+
+//2 Movement Flipout
+/*
+intakeHandler(-200);
+
+tray.move_absolute(800, 100);
+
+lift.move_absolute(200, -80);
+pros::delay(500);
+lift.move_absolute(0, 100);
+pros::delay(500);
+lift.move_absolute(500, -80);
+pros::delay(1000);
+lift.move_absolute(0, -80);
+pros::delay(500);
+lift.move_absolute(0, -80);
+tray.move_absolute(0, 100);
+
+pros::delay(10);
+intakeHandler(140);
+*/
+//2 Movement Flipout
+
+
+
+
+
+//  myChassis.setMaxVelocity(200);
+
+  autoDrive(-200);
+  pros::delay(500);
+  intakeHandler(200);
+
+  myChassis.moveDistance(1.73_in);
   myChassis.waitUntilSettled();
 
-/*
-  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.139166_ft, 0_ft, 0_deg}}, "A");
+  liftHandler(0);
+
+  /*
+  // Path Testing
+  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.139166_ft, 0.139166_ft, 0_deg}}, "A");
   profileController.setTarget("A");
   profileController.waitUntilSettled();
-*/
+  */
 
   pros::delay(1000);
   intakeHandler(0);
-  myChassis.moveDistance(-1.52_in);
+  myChassis.moveDistance(-1.56_in);
   myChassis.waitUntilSettled();
   myChassis.stop();
   driveLF.move_velocity(0);
   driveLB.move_velocity(0);
   driveRB.move_velocity(0);
   driveRF.move_velocity(0);
-  pros::delay(400);
+  pros::delay(500);
 
-  myChassis.turnAngle(21.2_deg);
+  myChassis.turnAngle(20.9_deg); //   21.2_deg
   myChassis.waitUntilSettled();
   myChassis.stop();
-
-//driveRightTest(4.9, 175);
 
   autoDrive(150); // drive forward to stacking area
   intakeHandler(-35);
@@ -76,104 +121,4 @@ void autonhandler() { // auton main
 
   pros::delay(1500);
   autoDrive(0); // stop all & win auton
-}
-
-
-
-
-
-
-
-
-
-void driveEncoderTicks (int ticks, int speed) { //drive in ticks
-
-  while (driveRF.get_position() < ticks) {
-    driveRB.move_velocity(speed);
-    driveRF.move_velocity(speed);
-    driveLB.move_velocity(speed);
-    driveLF.move_velocity(speed);
-  }
-
-  driveRF.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveLF.move_velocity(0);
-}
-
-void driveRightTest (double ticks, int speed) { //drive in ticks
-
-  while (driveRF.get_position() < ticks) {
-    driveRB.move_velocity(speed);
-    driveRF.move_velocity(speed);
-    driveLB.move_velocity(-speed/4);
-    driveLF.move_velocity(-speed/4);
-  }
-
-  driveRF.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveLF.move_velocity(0);
-}
-
-void driveEncoderInches (int inches, int speed) { // drive in inches?
-  int ticks = inches*88;
-  int highTolerance = ticks + 5;
-  int lowTolerance = ticks - 5;
-
-  while (driveRF.get_position() < ticks) {
-    driveRB.move_velocity(speed);
-    driveRF.move_velocity(speed);
-    driveLB.move_velocity(speed);
-    driveLF.move_velocity(speed);
-  }
-
-  driveRF.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveLF.move_velocity(0);
-}
-
-void turnEncoderTicks (double ticks, int speed) { //turn in ticks
-
-  while(driveRF.get_position() < ticks) {
-    driveLF.move_velocity(-speed);
-    driveLB.move_velocity(-speed);
-    driveRB.move_velocity(speed);
-    driveRF.move_velocity(speed);
-  }
-  driveLF.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveRF.move_velocity(0);
-}
-
-void turnEncoderTicksRed (double ticks, int speed) { //turn in ticks
-
-  while(driveLF.get_position() < ticks) {
-    driveLF.move_velocity(speed);
-    driveLB.move_velocity(speed);
-    driveRB.move_velocity(-speed);
-    driveRF.move_velocity(-speed);
-  }
-  driveLF.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveRF.move_velocity(0);
-}
-
-void autoDriveSlightLeft (int speed, double offset) { //auto drive but turns slightly to the left
-  double faster = offset * speed;
-  driveLF.move_velocity(speed);
-  driveLB.move_velocity(speed);
-  driveRF.move_velocity(faster);
-  driveRB.move_velocity(faster);
-}
-
-void autoDriveSlightRight (int speed, double offset) { //auto drive but turns slightly to the left
-  double faster = offset * speed;
-  driveLF.move_velocity(faster);
-  driveLB.move_velocity(faster);
-  driveRF.move_velocity(speed);
-  driveRB.move_velocity(speed);
 }
