@@ -1,6 +1,7 @@
 #include "main.h"
 #include "subsystems.hpp"
 #include <sstream>
+using namespace pros;
 void initialize() {
 	pros::lcd::initialize();
 }

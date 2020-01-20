@@ -25,15 +25,14 @@ void autonhandler() { // auton main
 
   tray.move_absolute(750, 100);
   delay(100);
-  lift.move_absolute(675, -100);
+  lift.move_absolute(600, -100);
 
   pros::delay(700);
   intakeHandler(0);
   pros::delay(600);
-  trayHandler(-150);
   liftHandler(-130);
   pros::delay(750);
-  trayHandler(0);
+    trayHandler(-150);
 //Normal Flipout
 
 
@@ -68,7 +67,8 @@ intakeHandler(140);
 
   autoDrive(-200);
   pros::delay(500);
-  intakeHandler(200);
+  intakeHandler(175);
+    trayHandler(0);
 
   myChassis.moveDistance(1.73_in);
   myChassis.waitUntilSettled();
@@ -91,7 +91,7 @@ intakeHandler(140);
   driveLB.move_velocity(0);
   driveRB.move_velocity(0);
   driveRF.move_velocity(0);
-  pros::delay(500);
+  pros::delay(400);
 
   myChassis.turnAngle(20.9_deg); //   21.2_deg
   myChassis.waitUntilSettled();
@@ -99,7 +99,7 @@ intakeHandler(140);
 
   autoDrive(150); // drive forward to stacking area
   intakeHandler(-35);
-  pros::delay(1000);
+  pros::delay(1150);
 
   autoDrive(250); // jerk forward to better stack cubes
   pros::delay(100);

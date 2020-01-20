@@ -1,4 +1,5 @@
 #include "subsystems.hpp"
+using namespace pros;
 
 //Drivetrain
 Motor driveRF(19, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
