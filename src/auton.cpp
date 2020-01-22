@@ -18,11 +18,10 @@ auto myChassis = ChassisControllerFactory::create(
 
 auto profileController = AsyncControllerFactory::motionProfile(
   2.5,  // Maximum linear velocity of the Chassis in m/s
-  2.0,  // Maximum linear acceleration of the Chassis in m/s/s
+   2.0,  // Maximum li..0;p6-9,.near acceleration of the Chassis in m/s/s
   10.0, // Maximum linear jerk of the Chassis in m/s/s/s
   myChassis // Chassis Controller
 );
-
 
 void autoDriveSlightLeft (int speed, double offset) { //auto drive but turns slightly to the left
   double faster = offset * speed;
@@ -69,9 +68,9 @@ void autonhandler() { // auton main
 
   liftHandler(0);
 
-  pros::delay(200);
+  pros::delay(150);
   intakeHandler(0);
-  pros::delay(800);
+  pros::delay(850);
   myChassis.moveDistance(-1.55_in);
   myChassis.waitUntilSettled();
   myChassis.stop();
@@ -83,9 +82,9 @@ void autonhandler() { // auton main
 
 
   if (backBlue == 1) {
-  myChassis.turnAngle(20.9_deg); //   21.2_deg
+  myChassis.turnAngle(20.85_deg); //   21.2_deg
   } else {
-  myChassis.turnAngle(-20.9_deg); //   21.2_deg
+  myChassis.turnAngle(-20.85_deg); //   21.2_deg
   }
   myChassis.waitUntilSettled();
   myChassis.stop();
@@ -111,6 +110,8 @@ void autonhandler() { // auton main
   autoDrive(-200);
   pros::delay(250);
   intakeHandler(0);
+
+  trayHandler(-100);
 
   pros::delay(1500);
   autoDrive(0); // stop all & win auton
