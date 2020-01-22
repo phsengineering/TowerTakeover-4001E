@@ -6,8 +6,8 @@ using namespace okapi;
 
 int frontBlue = 0;
 int frontRed = 0;
-int backBlue = 1;
-int backRed = 0;
+int backBlue = 0;
+int backRed = 1;
 
 auto myChassis = ChassisControllerFactory::create(
   {19, 20}, // Left motors
@@ -103,15 +103,12 @@ void autonhandler() { // auton main
   pros::delay(1000);
   autoDrive(-60);
   intakeHandler(-65);
+  trayHandler(-100);
   pros::delay(700);
-  trayHandler(-70);
 
-  trayHandler(0); //stop lift
   autoDrive(-200);
   pros::delay(250);
   intakeHandler(0);
-
-  trayHandler(-100);
 
   pros::delay(1500);
   autoDrive(0); // stop all & win auton
@@ -150,7 +147,12 @@ void autonhandler() { // auton main
   intakeHandler(0);
   autoDrive(0);
 
+  if (frontRed == 1) {
   myChassis.turnAngle(21.25);
+  } else {
+  myChassis.turnAngle(-21.25);
+  }
+
   pros::delay(1000);
   autoDrive(150);
   intakeHandler(-25);
