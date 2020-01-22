@@ -4,6 +4,11 @@
 
 using namespace okapi;
 
+int frontBlue = 0;
+int frontRed = 0;
+int backBlue = 1;
+int backRed = 0;
+
 auto myChassis = ChassisControllerFactory::create(
   {19, 20}, // Left motors
   {15, 16},   // Right motors
@@ -18,8 +23,28 @@ auto profileController = AsyncControllerFactory::motionProfile(
   myChassis // Chassis Controller
 );
 
+
+void autoDriveSlightLeft (int speed, double offset) { //auto drive but turns slightly to the left
+  double faster = offset * speed;
+  driveLF.move_velocity(speed);
+  driveLB.move_velocity(speed);
+  driveRF.move_velocity(faster);
+  driveRB.move_velocity(faster);
+}
+
+void autoDriveSlightRight (int speed, double offset) { //auto drive but turns slightly to the left
+  double faster = offset * speed;
+  driveLF.move_velocity(faster);
+  driveLB.move_velocity(faster);
+  driveRF.move_velocity(speed);
+  driveRB.move_velocity(speed);
+}
+
 void autonhandler() { // auton main
-//Normal Flipout
+
+  if (backBlue == 1 || backRed == 1) {
+
+  //Back Auton
   intakeHandler(-200);
   trayHandler(120);
 
@@ -32,59 +57,22 @@ void autonhandler() { // auton main
   pros::delay(600);
   liftHandler(-130);
   pros::delay(750);
-    trayHandler(-150);
-//Normal Flipout
-
-
-
-//2 Movement Flipout
-/*
-intakeHandler(-200);
-
-tray.move_absolute(800, 100);
-
-lift.move_absolute(200, -80);
-pros::delay(500);
-lift.move_absolute(0, 100);
-pros::delay(500);
-lift.move_absolute(500, -80);
-pros::delay(1000);
-lift.move_absolute(0, -80);
-pros::delay(500);
-lift.move_absolute(0, -80);
-tray.move_absolute(0, 100);
-
-pros::delay(10);
-intakeHandler(140);
-*/
-//2 Movement Flipout
-
-
-
-
-
-//  myChassis.setMaxVelocity(200);
+  trayHandler(-150);
 
   autoDrive(-200);
   pros::delay(500);
   intakeHandler(175);
-    trayHandler(0);
+  trayHandler(0);
 
-  myChassis.moveDistance(1.73_in);
+  myChassis.moveDistance(1.69_in);
   myChassis.waitUntilSettled();
 
   liftHandler(0);
 
-  /*
-  // Path Testing
-  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{0.139166_ft, 0.139166_ft, 0_deg}}, "A");
-  profileController.setTarget("A");
-  profileController.waitUntilSettled();
-  */
-
-  pros::delay(1000);
+  pros::delay(200);
   intakeHandler(0);
-  myChassis.moveDistance(-1.56_in);
+  pros::delay(800);
+  myChassis.moveDistance(-1.55_in);
   myChassis.waitUntilSettled();
   myChassis.stop();
   driveLF.move_velocity(0);
@@ -93,7 +81,12 @@ intakeHandler(140);
   driveRF.move_velocity(0);
   pros::delay(400);
 
+
+  if (backBlue == 1) {
   myChassis.turnAngle(20.9_deg); //   21.2_deg
+  } else {
+  myChassis.turnAngle(-20.9_deg); //   21.2_deg
+  }
   myChassis.waitUntilSettled();
   myChassis.stop();
 
@@ -121,4 +114,69 @@ intakeHandler(140);
 
   pros::delay(1500);
   autoDrive(0); // stop all & win auton
+  } else {
+
+  //Font Auton
+  intakeHandler(-200);
+  trayHandler(120);
+
+  tray.move_absolute(750, 100);
+  delay(100);
+  lift.move_absolute(600, -100);
+
+  pros::delay(700);
+  intakeHandler(0);
+  pros::delay(600);
+  liftHandler(-130);
+  pros::delay(750);
+  trayHandler(-150);
+
+  autoDrive(-200);
+  pros::delay(500);
+  intakeHandler(200);
+  trayHandler(0);
+
+  autoDrive(0);
+  pros::delay(1000);
+
+  if (frontRed == 1) {
+  autoDriveSlightLeft(120, 1.9);
+  } else {
+  autoDriveSlightRight(120, 1.9);
+  }
+
+  pros::delay(2000);
+  intakeHandler(0);
+  autoDrive(0);
+
+  myChassis.turnAngle(21.25);
+  pros::delay(1000);
+  autoDrive(150);
+  intakeHandler(-25);
+  pros::delay(1500);
+
+  autoDrive(0); //stop drive
+
+  trayHandler(210); // deploy tray to stack cubes
+  pros::delay(400);
+  intakeHandler(-50);
+  pros::delay(1000);
+  autoDrive(-60);
+  intakeHandler(-65);
+  pros::delay(700);
+  trayHandler(-70);
+
+  trayHandler(0); //stop lift
+  autoDrive(-200);
+  pros::delay(250);
+  intakeHandler(0);
+
+  autoDrive(-250);
+
+  tray.move_absolute(0, -100);
+  lift.move_absolute(0, -80);
+  pros::delay(2000);
+
+  autoDrive(0); // stop all & win auton
+  }
 }
