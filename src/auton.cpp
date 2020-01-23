@@ -59,7 +59,7 @@ void autonhandler() { // auton main
   trayHandler(-150);
 
   autoDrive(-200);
-  pros::delay(500);
+  pros::delay(750);
   intakeHandler(175);
   trayHandler(0);
 
@@ -68,12 +68,12 @@ void autonhandler() { // auton main
 
   if (backBlue == 1) {
   pros::delay(150);
-  intakeHandler(0);
+  intakeHandler(10);
   pros::delay(850);
 } else {
-  pros::delay(350);
-  intakeHandler(10);
-  pros::delay(650);
+  pros::delay(400);
+  intakeHandler(7);
+  pros::delay(600);
 }
   myChassis.moveDistance(-1.53_in); //-1.55
   myChassis.waitUntilSettled();
@@ -88,7 +88,7 @@ void autonhandler() { // auton main
   if (backBlue == 1) {
   myChassis.turnAngle(20.85_deg); //   21.2_deg
   } else {
-  myChassis.turnAngle(-20.60_deg); //   21.2_deg
+  myChassis.turnAngle(-20.65_deg); //   21.2_deg
   }
   myChassis.waitUntilSettled();
   myChassis.stop();
@@ -139,7 +139,7 @@ void autonhandler() { // auton main
   trayHandler(0);
 
   autoDrive(0);
-  pros::delay(1000);
+  pros::delay(2000);
 
   if (frontRed == 1) {
   autoDriveSlightLeft(120, 1.9);
