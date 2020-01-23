@@ -66,32 +66,36 @@ void autonhandler() { // auton main
   myChassis.moveDistance(1.69_in);
   myChassis.waitUntilSettled();
 
-  liftHandler(0);
-
+  if (backBlue == 1) {
   pros::delay(150);
   intakeHandler(0);
   pros::delay(850);
-  myChassis.moveDistance(-1.55_in);
+} else {
+  pros::delay(350);
+  intakeHandler(10);
+  pros::delay(650);
+}
+  myChassis.moveDistance(-1.53_in); //-1.55
   myChassis.waitUntilSettled();
   myChassis.stop();
   driveLF.move_velocity(0);
   driveLB.move_velocity(0);
   driveRB.move_velocity(0);
   driveRF.move_velocity(0);
+  intakeHandler(0);
   pros::delay(400);
-
 
   if (backBlue == 1) {
   myChassis.turnAngle(20.85_deg); //   21.2_deg
   } else {
-  myChassis.turnAngle(-20.85_deg); //   21.2_deg
+  myChassis.turnAngle(-20.60_deg); //   21.2_deg
   }
   myChassis.waitUntilSettled();
   myChassis.stop();
 
   autoDrive(150); // drive forward to stacking area
-  intakeHandler(-35);
-  pros::delay(1150);
+  intakeHandler(-32);
+  pros::delay(1200);
 
   autoDrive(250); // jerk forward to better stack cubes
   pros::delay(100);
@@ -99,11 +103,11 @@ void autonhandler() { // auton main
 
   trayHandler(210); // deploy tray to stack cubes
   pros::delay(400);
-  intakeHandler(-50);
+  intakeHandler(-55);
   pros::delay(1000);
   autoDrive(-60);
-  intakeHandler(-65);
-  trayHandler(-100);
+  intakeHandler(-70);
+  trayHandler(-200);
   pros::delay(700);
 
   autoDrive(-200);

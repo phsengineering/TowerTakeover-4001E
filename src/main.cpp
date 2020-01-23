@@ -66,6 +66,27 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		lift.move_absolute(0, -80);
 	}
 
+	if (mainController.get_digital(DIGITAL_Y)) {
+		intakeHandler(-200);
+		trayHandler(120);
+
+		tray.move_absolute(750, 100);
+		delay(100);
+		lift.move_absolute(600, -100);
+
+		pros::delay(700);
+		intakeHandler(0);
+		pros::delay(600);
+		liftHandler(-130);
+		pros::delay(750);
+		trayHandler(-150);
+		pros::delay(500);
+
+		tray.move_absolute(0, -100);
+		lift.move_absolute(0, -80);
+		intakeHandler(0);
+	}
+
 	/*
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {
 			lift.set_brake_mode(MOTOR_BRAKE_HOLD);
