@@ -49,7 +49,7 @@ void autonhandler() { // auton main
 
   tray.move_absolute(750, 100);
   delay(100);
-  lift.move_absolute(600, -100);
+  lift.move_absolute(650, -100);
 
   pros::delay(700);
   intakeHandler(0);
@@ -63,7 +63,7 @@ void autonhandler() { // auton main
   intakeHandler(175);
   trayHandler(0);
 
-  myChassis.moveDistance(1.69_in);
+  myChassis.moveDistance(1.71_in);
   myChassis.waitUntilSettled();
 
   if (backBlue == 1) {
@@ -72,7 +72,7 @@ void autonhandler() { // auton main
   pros::delay(850);
 } else {
   pros::delay(400);
-  intakeHandler(7);
+  intakeHandler(5);
   pros::delay(600);
 }
   myChassis.moveDistance(-1.53_in); //-1.55
@@ -88,7 +88,7 @@ void autonhandler() { // auton main
   if (backBlue == 1) {
   myChassis.turnAngle(20.85_deg); //   21.2_deg
   } else {
-  myChassis.turnAngle(-20.65_deg); //   21.2_deg
+  myChassis.turnAngle(-20.55_deg); //   21.2_deg
   }
   myChassis.waitUntilSettled();
   myChassis.stop();
