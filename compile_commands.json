@@ -29,11 +29,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/subsystems.cpp.o",
-            "src\\subsystems.cpp"
+            "bin/main.cpp.o",
+            "src\\main.cpp"
         ],
         "directory": "C:\\Users\\lukeg\\vex\\TowerTakeover-4001E",
-        "file": "src\\subsystems.cpp"
+        "file": "src\\main.cpp"
     },
     {
         "arguments": [
@@ -65,11 +65,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/main.cpp.o",
-            "src\\main.cpp"
+            "bin/subsystems.cpp.o",
+            "src\\subsystems.cpp"
         ],
         "directory": "C:\\Users\\lukeg\\vex\\TowerTakeover-4001E",
-        "file": "src\\main.cpp"
+        "file": "src\\subsystems.cpp"
     },
     {
         "arguments": [

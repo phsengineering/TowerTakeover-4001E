@@ -4,10 +4,11 @@
 
 using namespace okapi;
 
-int frontBlue = 0;
+int frontBlue = 1;
 int frontRed = 0;
+
 int backBlue = 0;
-int backRed = 1;
+int backRed = 0;
 
 auto myChassis = ChassisControllerFactory::create(
   {19, 20}, // Left motors
@@ -63,13 +64,13 @@ void autonhandler() { // auton main
   intakeHandler(175);
   trayHandler(0);
 
-  myChassis.moveDistance(1.71_in);
+  myChassis.moveDistance(1.69_in);
   myChassis.waitUntilSettled();
 
   if (backBlue == 1) {
-  pros::delay(150);
-  intakeHandler(10);
-  pros::delay(850);
+  pros::delay(50);
+  intakeHandler(5);
+  pros::delay(950);
 } else {
   pros::delay(400);
   intakeHandler(5);
@@ -86,7 +87,7 @@ void autonhandler() { // auton main
   pros::delay(400);
 
   if (backBlue == 1) {
-  myChassis.turnAngle(20.85_deg); //   21.2_deg
+  myChassis.turnAngle(20.87_deg); //   21.2_deg
   } else {
   myChassis.turnAngle(-20.55_deg); //   21.2_deg
   }
@@ -95,17 +96,17 @@ void autonhandler() { // auton main
 
   autoDrive(150); // drive forward to stacking area
   intakeHandler(-32);
-  pros::delay(1200);
+  pros::delay(1650);
 
   autoDrive(250); // jerk forward to better stack cubes
-  pros::delay(100);
+  pros::delay(180);
   autoDrive(0); //stop drive
 
   trayHandler(210); // deploy tray to stack cubes
   pros::delay(400);
   intakeHandler(-55);
   pros::delay(1000);
-  autoDrive(-60);
+  autoDrive(-100);
   intakeHandler(-70);
   trayHandler(-200);
   pros::delay(700);
@@ -158,18 +159,18 @@ void autonhandler() { // auton main
   }
 
   pros::delay(1000);
-  autoDrive(150);
+  autoDrive(140);
   intakeHandler(-25);
-  pros::delay(1500);
+  pros::delay(1250);
 
   autoDrive(0); //stop drive
 
   trayHandler(210); // deploy tray to stack cubes
   pros::delay(400);
-  intakeHandler(-50);
+  intakeHandler(-35);
   pros::delay(1000);
   autoDrive(-60);
-  intakeHandler(-65);
+  intakeHandler(-30);
   pros::delay(700);
   trayHandler(-70);
 
