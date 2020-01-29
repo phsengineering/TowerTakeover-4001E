@@ -46,24 +46,37 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		}
 		else {
 			intakeHandler(0);
+
+				if (mainController.get_digital(DIGITAL_UP)) {
+					liftHandler(50);
+					pros::delay(75);
+					liftHandler(0);
+				}
+
+				if (mainController.get_digital(DIGITAL_DOWN)) {
+					liftHandler(-50);
+					pros::delay(75);
+					liftHandler(0);
+				}
+
 		}
 
 //TRAY MACROS--------------------------------
 	if(mainController.get_digital(DIGITAL_L1)){ //mid tower
-		tray.move_absolute(750, 100);
+		tray.move_absolute(750, 80);
 		delay(100);
-		lift.move_absolute(575, -80);
+		lift.move_absolute(300, -80);
 	}
 
 	if(mainController.get_digital(DIGITAL_L2)){ //low tower
-		tray.move_absolute(800, 100);
+		tray.move_absolute(800, 80);
 		delay(100);
-		lift.move_absolute(400, -80);
+		lift.move_absolute(200, -80);
 	}
 
 	if(mainController.get_digital(DIGITAL_A)){ //resting position
-		tray.move_absolute(0, -100);
-		lift.move_absolute(0, -80);
+		tray.move_absolute(0, -50);
+		lift.move_absolute(0, -100);
 	}
 
 	if (mainController.get_digital(DIGITAL_Y)) {
@@ -86,6 +99,12 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		lift.move_absolute(0, -80);
 		intakeHandler(0);
 	}
+/*
+	if (mainController.get_digital(DIGITAL_LEFT)) {
+			tray.move_absolute(800, 100);
+	}
+	*/
+
 
 	/*
 		if(mainController.get_digital(E_CONTROLLER_DIGITAL_L1)) {

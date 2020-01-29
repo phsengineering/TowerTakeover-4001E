@@ -120,66 +120,101 @@ void autonhandler() { // auton main
   } else {
 
   //Font Auton
+/*
   intakeHandler(-200);
   trayHandler(120);
 
   tray.move_absolute(750, 100);
   delay(100);
-  lift.move_absolute(600, -100);
+ lift.move_absolute(600, -100);
 
   pros::delay(700);
   intakeHandler(0);
   pros::delay(600);
-  liftHandler(-130);
+ liftHandler(-130);
   pros::delay(750);
   trayHandler(-150);
+*/
 
   autoDrive(-200);
   pros::delay(500);
-  intakeHandler(200);
+  intakeHandler(85);
   trayHandler(0);
 
   autoDrive(0);
-  pros::delay(2000);
+  pros::delay(500);
 
-  if (frontRed == 1) {
-  autoDriveSlightLeft(120, 1.9);
-  } else {
-  autoDriveSlightRight(120, 1.9);
-  }
+  myChassis.moveDistance(1.52_in);
+  myChassis.waitUntilSettled();
 
-  pros::delay(2000);
+  pros::delay(200);
   intakeHandler(0);
   autoDrive(0);
 
   if (frontRed == 1) {
-  myChassis.turnAngle(21.25);
+    myChassis.turnAngle(20.05_deg);
   } else {
-  myChassis.turnAngle(-21.25);
+    myChassis.turnAngle(-20.05_deg);
+  }
+  myChassis.waitUntilSettled();
+  pros::delay(500);
+  intakeHandler(50);
+
+  myChassis.moveDistance(1.61_in);
+  myChassis.waitUntilSettled();
+
+  pros::delay(500);
+  autoDrive(0);
+  intakeHandler(0);
+
+  pros::delay(500);
+
+  if (frontRed == 1) {
+  myChassis.turnAngle(16);
+  } else {
+  myChassis.turnAngle(-16);
   }
 
-  pros::delay(1000);
-  autoDrive(140);
-  intakeHandler(-25);
-  pros::delay(1250);
+  autoDrive(0);
 
-  autoDrive(0); //stop drive
+  pros::delay(500);
 
-  trayHandler(210); // deploy tray to stack cubes
-  pros::delay(400);
+  autoDrive(125);
   intakeHandler(-35);
   pros::delay(1000);
+
+  autoDrive(0); //stop drive
+  intakeHandler(0);
+
+  pros::delay(1000);
+
+  intakeHandler(-200);
+  pros::delay(800);
+  intakeHandler(-20);
+  pros::delay(500);
+  lift.move_absolute(100, -50);
+  pros::delay(200);
+  intakeHandler(-100);
+  pros::delay(1000);
+/*
+  trayHandler(210); // deploy tray to stack cubes
+  pros::delay(400);
+  intakeHandler(-150);
+  pros::delay(1000);
   autoDrive(-60);
-  intakeHandler(-30);
+  intakeHandler(-200);
   pros::delay(700);
   trayHandler(-70);
 
   trayHandler(0); //stop lift
+  intakeHandler(-90);
   autoDrive(-200);
   pros::delay(250);
-  intakeHandler(0);
+  intakeHandler(-40);
 
+*/
   autoDrive(-250);
+  pros::delay(500);
 
   tray.move_absolute(0, -100);
   lift.move_absolute(0, -80);
@@ -187,4 +222,5 @@ void autonhandler() { // auton main
 
   autoDrive(0); // stop all & win auton
   }
+
 }
