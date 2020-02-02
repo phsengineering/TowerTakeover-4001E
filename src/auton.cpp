@@ -50,7 +50,7 @@ void autonhandler() { // auton main
 
   tray.move_absolute(750, 100);
   delay(100);
-  lift.move_absolute(650, -100);
+  lift.move_absolute(200, -100);
 
   pros::delay(700);
   intakeHandler(0);
