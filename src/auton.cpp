@@ -18,7 +18,7 @@ auto myChassis = ChassisControllerFactory::create(
 );
 
 auto profileController = AsyncControllerFactory::motionProfile(
-  2.5,  // Maximum linear velocity of the Chassis in m/s
+  5,  // Maximum linear velocity of the Chassis in m/s
    2.0,  // Maximum li..0;p6-9,.near acceleration of the Chassis in m/s/s
   10.0, // Maximum linear jerk of the Chassis in m/s/s/s
   myChassis // Chassis Controller
@@ -119,14 +119,14 @@ void autonhandler() { // auton main
   autoDrive(0); // stop all & win auton
   } else {
 
-  //Font Auton
-/*
+
+
   intakeHandler(-200);
   trayHandler(120);
 
   tray.move_absolute(750, 100);
   delay(100);
- lift.move_absolute(600, -100);
+ lift.move_absolute(180, -100);
 
   pros::delay(700);
   intakeHandler(0);
@@ -134,33 +134,40 @@ void autonhandler() { // auton main
  liftHandler(-130);
   pros::delay(750);
   trayHandler(-150);
-*/
+
+
 
   autoDrive(-200);
   pros::delay(500);
-  intakeHandler(85);
+  intakeHandler(95);
   trayHandler(0);
 
   autoDrive(0);
   pros::delay(500);
 
-  myChassis.moveDistance(1.52_in);
+  myChassis.setMaxVelocity(300);
+
+  myChassis.moveDistance(1.51_in);
   myChassis.waitUntilSettled();
 
   pros::delay(200);
   intakeHandler(0);
   autoDrive(0);
 
-  if (frontRed == 1) {
-    myChassis.turnAngle(20.05_deg);
-  } else {
-    myChassis.turnAngle(-20.05_deg);
-  }
+    myChassis.setMaxVelocity(250);
+
+    if (frontRed == 1) {
+      myChassis.turnAngle(18.5_deg);
+    } else {
+      myChassis.turnAngle(-18.5_deg);
+    }
   myChassis.waitUntilSettled();
   pros::delay(500);
-  intakeHandler(50);
+  intakeHandler(95);
 
-  myChassis.moveDistance(1.61_in);
+    myChassis.setMaxVelocity(300);
+
+  myChassis.moveDistance(1.55_in);
   myChassis.waitUntilSettled();
 
   pros::delay(500);
@@ -169,58 +176,52 @@ void autonhandler() { // auton main
 
   pros::delay(500);
 
+    myChassis.setMaxVelocity(150);
+
   if (frontRed == 1) {
-  myChassis.turnAngle(16);
+  myChassis.turnAngle(17);
   } else {
-  myChassis.turnAngle(-16);
+  myChassis.turnAngle(-17);
   }
 
   autoDrive(0);
 
   pros::delay(500);
 
-  autoDrive(125);
-  intakeHandler(-35);
-  pros::delay(1000);
+  autoDrive(150);
+  intakeHandler(-45);
+  pros::delay(750);
 
   autoDrive(0); //stop drive
   intakeHandler(0);
 
   pros::delay(1000);
-
-  intakeHandler(-200);
-  pros::delay(800);
-  intakeHandler(-20);
+  autoDrive(0);
+  intakeHandler(-30);
   pros::delay(500);
-  lift.move_absolute(100, -50);
-  pros::delay(200);
-  intakeHandler(-100);
-  pros::delay(1000);
-/*
+
+
+
   trayHandler(210); // deploy tray to stack cubes
   pros::delay(400);
-  intakeHandler(-150);
-  pros::delay(1000);
-  autoDrive(-60);
-  intakeHandler(-200);
-  pros::delay(700);
-  trayHandler(-70);
-
-  trayHandler(0); //stop lift
-  intakeHandler(-90);
-  autoDrive(-200);
-  pros::delay(250);
-  intakeHandler(-40);
-
-*/
-  autoDrive(-250);
+  intakeHandler(-50);
+  pros::delay(350);
+  intakeHandler(-250);
   pros::delay(500);
+  autoDrive(-100);
+  pros::delay(500);
+  intakeHandler(-200);
+  trayHandler(-200);
+  pros::delay(700);
+
+  autoDrive(-200);
 
   tray.move_absolute(0, -100);
   lift.move_absolute(0, -80);
   pros::delay(2000);
 
   autoDrive(0); // stop all & win auton
+
   }
 
 }
