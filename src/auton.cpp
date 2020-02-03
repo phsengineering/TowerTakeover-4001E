@@ -40,6 +40,14 @@ void autoDriveSlightRight (int speed, double offset) { //auto drive but turns sl
   driveRB.move_velocity(speed);
 }
 
+void stopAll () {
+  myChassis.stop();
+  driveLF.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveRF.move_velocity(0);
+}
+
 void autonhandler() { // auton main
 
   if (backBlue == 1 || backRed == 1) {
@@ -50,7 +58,7 @@ void autonhandler() { // auton main
 
   tray.move_absolute(750, 100);
   delay(100);
-  lift.move_absolute(200, -100);
+  lift.move_absolute(150, -100);
 
   pros::delay(700);
   intakeHandler(0);
@@ -61,51 +69,76 @@ void autonhandler() { // auton main
 
   autoDrive(-200);
   pros::delay(500);
-  intakeHandler(215);
+  intakeHandler(300);
   trayHandler(0);
+  liftHandler(0);
 
-  myChassis.moveDistance(1.7_in);
+  myChassis.setMaxVelocity(375);
+
+  myChassis.moveDistance(1.69_in);
   myChassis.waitUntilSettled();
 
-  if (backBlue == 1) {
-  pros::delay(50);
-  intakeHandler(10);
   pros::delay(400);
-} else {
-  pros::delay(400);
-  intakeHandler(5);
-  pros::delay(400);
-}
-  myChassis.moveDistance(-1.53_in); //-1.55
-  myChassis.waitUntilSettled();
-  myChassis.stop();
-  driveLF.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveRF.move_velocity(0);
+  autoDrive(-100);
   intakeHandler(0);
-  pros::delay(400);
+  pros::delay(600);
+  autoDrive(0);
+
+  myChassis.setMaxVelocity(190);
+
+if (backBlue == 1) {
+myChassis.turnAngle(-14.5_deg); //   21.2_deg
+} else {
+myChassis.turnAngle(14.5_deg); //   21.2_deg
+}
+
+myChassis.waitUntilSettled();
+stopAll();
+
+pros::delay(200);
+
+  myChassis.setMaxVelocity(375);
+  intakeHandler(75);
+
+myChassis.moveDistance(1.1_in); //-1.55
+myChassis.waitUntilSettled();
+stopAll();
+intakeHandler(125);
+pros::delay(500);
+
+
+  myChassis.moveDistance(-1.3_in); //-1.55
+  myChassis.waitUntilSettled();
+  stopAll();
+  intakeHandler(0);
+  pros::delay(500);
+
+  myChassis.setMaxVelocity(182);
 
   if (backBlue == 1) {
-  myChassis.turnAngle(20.87_deg); //   21.2_deg
+  myChassis.turnAngle(-20.75_deg); //   21.2_deg
   } else {
-  myChassis.turnAngle(-20.55_deg); //   21.2_deg
+  myChassis.turnAngle(20.75_deg); //   21.2_deg
   }
   myChassis.waitUntilSettled();
   myChassis.stop();
 
+  pros::delay(250);
 
-  autoDrive(200); // drive forward to stacking area
-  intakeHandler(-10);
-  pros::delay(1600);
+  autoDrive(400); // drive forward to stacking area
+  pros::delay(1500);
+
+  autoDrive(200);
+  pros::delay(600);
   autoDrive(0);
   intakeHandler(-30);
-  pros::delay(500);
+  pros::delay(250);
 
 
 
   trayHandler(210); // deploy tray to stack cubes
-  pros::delay(600);
+  liftHandler(-200);
+  pros::delay(500);
   intakeHandler(-250);
   pros::delay(1250);
   autoDrive(-100);
@@ -114,6 +147,7 @@ void autonhandler() { // auton main
   pros::delay(700);
 
   autoDrive(-200);
+  liftHandler(0);
 
   pros::delay(1500);
   autoDrive(0); // stop all & win auton

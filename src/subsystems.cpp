@@ -9,7 +9,7 @@ Motor driveLB(16, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
 Motor tray(12, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor intakeR(7, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 Motor intakeL(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-Motor lift(8, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+Motor lift(6, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 bool debug = false;
 void drive(int y, int r)
 {
