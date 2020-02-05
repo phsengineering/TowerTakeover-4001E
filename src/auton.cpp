@@ -4,35 +4,37 @@
 
 using namespace okapi;
 
+
 /*
  autonomous preset:
  0 -> frontBlue
  1 -> frontRed
  2 -> backBlue
  3 -> backRed
-
 */
-
 
 int frontBlue = 0;
 int frontRed = 0;
 
 int backBlue = 1;
 int backRed = 0;
+auto myChassis = ChassisControllerBuilder()
+    .withMotors({19, 20}, {15, 16}) // pass motors to odomchassiscontroller builder
+    .withGains(
+         { 0.00345, 0.00002, 0.00009 }, // Distance controller gains
+         { 0.0061, 0.00057, 0.000212 }, // Turn controller gains
+         { 0.00022, 0.0001, 0.00003 }  // Angle controller gains
+     )
 
-auto myChassis = ChassisControllerFactory::create(
-  {19, 20}, // Left motors
-  {15, 16},   // Right motors
-  AbstractMotor::gearset::green, // Torque gearset
-  {3.25_in, 8_in} //wheels, wheelbase width
-);
-
-auto profileController = AsyncControllerFactory::motionProfile(
-  5,  // Maximum linear velocity of the Chassis in m/s
-   2.0,  // Maximum li..0;p6-9,.near acceleration of the Chassis in m/s/s
-  10.0, // Maximum linear jerk of the Chassis in m/s/s/s
-  myChassis // Chassis Controller
-);
+    //.withSensors({'E', 'F', true}, {'A', 'B', false}, {'C', 'D', true}) //pass sensors for left, right, middle
+    .withDimensions(AbstractMotor::gearset::green, {{3.25_in, 8_in}, imev5GreenTPR}) //pass chassis dimensions. 2.75" tracking wheels, 4.25" distance and 4.375" b/w mid and middle wheel
+    .withLogger(std::make_shared<Logger>(
+        TimeUtilFactory::createDefault().getTimer(),
+        "/ser/sout", // Output to the PROS terminal
+        Logger::LogLevel::debug // Show all feedback
+    ))
+    //.withMaxVelocity(300) //cap velocity at 300 to reduce jerk and cut down on PID correction time
+    .build(); // build an odometry chassis
 
 void autoDriveSlightLeft (int speed, double offset) { //auto drive but turns slightly to the left
   double faster = offset * speed;
@@ -51,16 +53,18 @@ void autoDriveSlightRight (int speed, double offset) { //auto drive but turns sl
 }
 
 void stopAll () {
-  myChassis.stop();
+  myChassis->stop();
   driveLF.move_velocity(0);
   driveLB.move_velocity(0);
   driveRB.move_velocity(0);
   driveRF.move_velocity(0);
 }
 
-void autonhandler(int toggle) { // auton main
+int autonomousPreSet = 0;
 
-  if (backBlue == 1 || backRed == 1) {
+void autonhandler() { // auton main
+
+  if (autonomousPreSet == 2 || autonomousPreSet == 3) {  //back blue or back red
 
   //Back Auton
   intakeHandler(-200);
@@ -83,10 +87,10 @@ void autonhandler(int toggle) { // auton main
   trayHandler(0);
   liftHandler(0);
 
-  myChassis.setMaxVelocity(375);
+  myChassis->setMaxVelocity(375);
 
-  myChassis.moveDistance(1.69_in);
-  myChassis.waitUntilSettled();
+  myChassis->moveDistance(1.69_in);
+  myChassis->waitUntilSettled();
 
   pros::delay(400);
   autoDrive(-100);
@@ -94,44 +98,44 @@ void autonhandler(int toggle) { // auton main
   pros::delay(600);
   autoDrive(0);
 
-  myChassis.setMaxVelocity(190);
+  myChassis->setMaxVelocity(190);
 
-if (backBlue == 1) {
-myChassis.turnAngle(-14.5_deg); //   21.2_deg
+if (autonomousPreSet == 2) { // back blue
+myChassis->turnAngle(-14.5_deg); //   21.2_deg
 } else {
-myChassis.turnAngle(14.5_deg); //   21.2_deg
+myChassis->turnAngle(14.5_deg); //   21.2_deg
 }
 
-myChassis.waitUntilSettled();
+myChassis->waitUntilSettled();
 stopAll();
 
 pros::delay(200);
 
-  myChassis.setMaxVelocity(375);
+  myChassis->setMaxVelocity(375);
   intakeHandler(75);
 
-myChassis.moveDistance(1.1_in); //-1.55
-myChassis.waitUntilSettled();
+myChassis->moveDistance(1.1_in); //-1->55
+myChassis->waitUntilSettled();
 stopAll();
 intakeHandler(125);
 pros::delay(500);
 
 
-  myChassis.moveDistance(-1.3_in); //-1.55
-  myChassis.waitUntilSettled();
+  myChassis->moveDistance(-1.3_in); //-1->55
+  myChassis->waitUntilSettled();
   stopAll();
   intakeHandler(0);
   pros::delay(500);
 
-  myChassis.setMaxVelocity(182);
+  myChassis->setMaxVelocity(182);
 
-  if (backBlue == 1) {
-  myChassis.turnAngle(-20.75_deg); //   21.2_deg
+  if (autonomousPreSet == 2) { // back blue
+  myChassis->turnAngle(-20.75_deg); //   21.2_deg
   } else {
-  myChassis.turnAngle(20.75_deg); //   21.2_deg
+  myChassis->turnAngle(20.75_deg); //   21.2_deg
   }
-  myChassis.waitUntilSettled();
-  myChassis.stop();
+  myChassis->waitUntilSettled();
+  myChassis->stop();
 
   pros::delay(250);
 
@@ -189,30 +193,30 @@ pros::delay(500);
   autoDrive(0);
   pros::delay(500);
 
-  myChassis.setMaxVelocity(300);
+  myChassis->setMaxVelocity(300);
 
-  myChassis.moveDistance(1.51_in);
-  myChassis.waitUntilSettled();
+  myChassis->moveDistance(1.51_in);
+  myChassis->waitUntilSettled();
 
   pros::delay(200);
   intakeHandler(0);
   autoDrive(0);
 
-    myChassis.setMaxVelocity(250);
+    myChassis->setMaxVelocity(250);
 
-    if (frontRed == 1) {
-      myChassis.turnAngle(18.5_deg);
+    if (autonomousPreSet == 1) {
+      myChassis->turnAngle(18.5_deg);
     } else {
-      myChassis.turnAngle(-18.5_deg);
+      myChassis->turnAngle(-18.5_deg);
     }
-  myChassis.waitUntilSettled();
+  myChassis->waitUntilSettled();
   pros::delay(500);
   intakeHandler(95);
 
-    myChassis.setMaxVelocity(300);
+    myChassis->setMaxVelocity(300);
 
-  myChassis.moveDistance(1.55_in);
-  myChassis.waitUntilSettled();
+  myChassis->moveDistance(1.55_in);
+  myChassis->waitUntilSettled();
 
   pros::delay(500);
   autoDrive(0);
@@ -220,12 +224,12 @@ pros::delay(500);
 
   pros::delay(500);
 
-    myChassis.setMaxVelocity(150);
+    myChassis->setMaxVelocity(150);
 
-  if (frontRed == 1) {
-  myChassis.turnAngle(17);
+  if (autonomousPreSet == 1) {
+  myChassis->turnAngle(17);
   } else {
-  myChassis.turnAngle(-17);
+  myChassis->turnAngle(-17);
   }
 
   autoDrive(0);

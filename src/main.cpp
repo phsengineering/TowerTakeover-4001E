@@ -2,13 +2,13 @@
 #include "subsystems.hpp"
 #include <sstream>
 using namespace pros;
-
+int autonomousPreSet = 0;
   pros::ADIDigitalIn limit('H');
 
-int autonomousPreSet = 0;
 
 void initialize() {
-
+  pros::lcd::initialize();
+  pros::lcd::set_text(1, "test");
 }
 
 void disabled() {}
@@ -19,11 +19,12 @@ void competition_initialize() {
      if(limit.get_value() == 1) {
        autonomousPreSet++;
      }
-     if (autonomousPreSet == 3) {
+     if (autonomousPreSet == 4) {
        autonomousPreSet = 0;
      }
-     autoDrive(autonomousPreSet * 100);
-     pros::delay(200);
+     autonhandler();
+     pros::delay(300);
+     pros::lcd::print(0, "Auton: %d", autonomousPreSet);
     }
 
 }
@@ -96,6 +97,10 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		tray.move_absolute(0, -50);
 		lift.move_absolute(0, -100);
 	}
+
+  if(mainController.get_digital(DIGITAL_A)){ //resting position
+    intakeHandler(-200);
+  }
 
 	if (mainController.get_digital(DIGITAL_Y)) {
 		intakeHandler(-200);
