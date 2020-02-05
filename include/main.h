@@ -40,6 +40,9 @@
  * You should add more #includes here
  */
 #include "okapi/api.hpp"
+
+
+
 //#include "pros/api_legacy.h"
 
 /**
@@ -51,6 +54,8 @@
  * namespace.
  */
 using namespace pros;
+
+#include "pros/apix.h"
 // using namespace pros::literals;
 // using namespace okapi;
 

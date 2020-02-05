@@ -4,6 +4,16 @@
 
 using namespace okapi;
 
+/*
+ autonomous preset:
+ 0 -> frontBlue
+ 1 -> frontRed
+ 2 -> backBlue
+ 3 -> backRed
+
+*/
+
+
 int frontBlue = 0;
 int frontRed = 0;
 
@@ -48,7 +58,7 @@ void stopAll () {
   driveRF.move_velocity(0);
 }
 
-void autonhandler() { // auton main
+void autonhandler(int toggle) { // auton main
 
   if (backBlue == 1 || backRed == 1) {
 
@@ -58,7 +68,7 @@ void autonhandler() { // auton main
 
   tray.move_absolute(750, 100);
   delay(100);
-  lift.move_absolute(150, -100);
+  lift.move_absolute(250, -100);
 
   pros::delay(700);
   intakeHandler(0);
@@ -126,7 +136,7 @@ pros::delay(500);
   pros::delay(250);
 
   autoDrive(400); // drive forward to stacking area
-  pros::delay(1500);
+  pros::delay(1300);
 
   autoDrive(200);
   pros::delay(600);

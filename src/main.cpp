@@ -2,13 +2,31 @@
 #include "subsystems.hpp"
 #include <sstream>
 using namespace pros;
+
+  pros::ADIDigitalIn limit('H');
+
+int autonomousPreSet = 0;
+
 void initialize() {
-	pros::lcd::initialize();
+
 }
 
 void disabled() {}
 
-void competition_initialize() {}
+void competition_initialize() {
+
+  while (1 == 1) {
+     if(limit.get_value() == 1) {
+       autonomousPreSet++;
+     }
+     if (autonomousPreSet == 3) {
+       autonomousPreSet = 0;
+     }
+     autoDrive(autonomousPreSet * 100);
+     pros::delay(200);
+    }
+
+}
 
 void autonomous() {
 	autonhandler();
