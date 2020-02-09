@@ -10,9 +10,7 @@ using namespace okapi;
  1 -> frontRed
  2 -> backBlue
  3 -> backRed
-
 */
-
 
 int frontBlue = 0;
 int frontRed = 0;
@@ -58,24 +56,25 @@ void stopAll () {
   driveRF.move_velocity(0);
 }
 
-void autonhandler(int toggle) { // auton main
+void autonhandler(int autonomousPreSet) { // auton main
 
-  if (backBlue == 1 || backRed == 1) {
+  if (autonomousPreSet == 2 || autonomousPreSet == 3) {
 
   //Back Auton
   intakeHandler(-200);
-  trayHandler(120);
+ trayHandler(120);
 
-  tray.move_absolute(750, 100);
-  delay(100);
-  lift.move_absolute(250, -100);
+ tray.move_absolute(750, 100);
+ delay(100);
+ lift.move_absolute(250, 200);
 
-  pros::delay(700);
-  intakeHandler(0);
-  pros::delay(600);
-  liftHandler(-130);
-  pros::delay(750);
+ pros::delay(700);
+ intakeHandler(0);
+ pros::delay(300);
+ liftHandler(-200);
   trayHandler(-150);
+
+  pros::delay(750);
 
   autoDrive(-200);
   pros::delay(500);
@@ -85,21 +84,21 @@ void autonhandler(int toggle) { // auton main
 
   myChassis.setMaxVelocity(375);
 
-  myChassis.moveDistance(1.69_in);
+  myChassis.moveDistance(1.75_in);
   myChassis.waitUntilSettled();
 
   pros::delay(400);
-  autoDrive(-100);
+  autoDrive(-400);
   intakeHandler(0);
-  pros::delay(600);
+  pros::delay(500);
   autoDrive(0);
 
   myChassis.setMaxVelocity(190);
 
-if (backBlue == 1) {
-myChassis.turnAngle(-14.5_deg); //   21.2_deg
+if (autonomousPreSet == 2) {
+myChassis.turnAngle(-11_deg); //   21.2_deg
 } else {
-myChassis.turnAngle(14.5_deg); //   21.2_deg
+myChassis.turnAngle(11_deg); //   21.2_deg
 }
 
 myChassis.waitUntilSettled();
@@ -108,12 +107,12 @@ stopAll();
 pros::delay(200);
 
   myChassis.setMaxVelocity(375);
-  intakeHandler(75);
+  intakeHandler(50);
 
 myChassis.moveDistance(1.1_in); //-1.55
 myChassis.waitUntilSettled();
 stopAll();
-intakeHandler(125);
+intakeHandler(75);
 pros::delay(500);
 
 
@@ -125,7 +124,7 @@ pros::delay(500);
 
   myChassis.setMaxVelocity(182);
 
-  if (backBlue == 1) {
+  if (autonomousPreSet == 2) {
   myChassis.turnAngle(-20.75_deg); //   21.2_deg
   } else {
   myChassis.turnAngle(20.75_deg); //   21.2_deg
@@ -142,7 +141,7 @@ pros::delay(500);
   pros::delay(600);
   autoDrive(0);
   intakeHandler(-30);
-  pros::delay(250);
+  pros::delay(350);
 
 
 
@@ -200,7 +199,7 @@ pros::delay(500);
 
     myChassis.setMaxVelocity(250);
 
-    if (frontRed == 1) {
+    if (autonomousPreSet == 1) {
       myChassis.turnAngle(18.5_deg);
     } else {
       myChassis.turnAngle(-18.5_deg);
@@ -222,7 +221,7 @@ pros::delay(500);
 
     myChassis.setMaxVelocity(150);
 
-  if (frontRed == 1) {
+  if (autonomousPreSet == 1) {
   myChassis.turnAngle(17);
   } else {
   myChassis.turnAngle(-17);
@@ -243,8 +242,6 @@ pros::delay(500);
   autoDrive(0);
   intakeHandler(-30);
   pros::delay(500);
-
-
 
   trayHandler(210); // deploy tray to stack cubes
   pros::delay(400);

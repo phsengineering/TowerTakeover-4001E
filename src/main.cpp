@@ -6,30 +6,37 @@ using namespace pros;
   pros::ADIDigitalIn limit('H');
 
 int autonomousPreSet = 0;
+int state = 0;
 
 void initialize() {
-
+  delay(200);
+	pros::lcd::initialize();
 }
 
 void disabled() {}
 
+
+//autonomousPreSet++;
+
 void competition_initialize() {
 
   while (1 == 1) {
-     if(limit.get_value() == 1) {
-       autonomousPreSet++;
-     }
-     if (autonomousPreSet == 3) {
-       autonomousPreSet = 0;
-     }
-     autoDrive(autonomousPreSet * 100);
-     pros::delay(200);
+    if(limit.get_value() == 1) {
+        autonomousPreSet++;
     }
+    if (autonomousPreSet == 4) {
+      autonomousPreSet = 0;
+    }
+     std::string autons[4] = {"front blue", "front red", "back blue", "back red"};
+     std::cout << autons[0];
+      lcd::print(0, "%s", autons[autonomousPreSet]);
+    pros::delay(100);
+   }
 
 }
 
 void autonomous() {
-	autonhandler();
+	autonhandler(autonomousPreSet);
 }
 
  void opcontrol() {
@@ -61,22 +68,15 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		}
 		else if (mainController.get_digital(E_CONTROLLER_DIGITAL_R2)) {
 			intakeHandler(-110);
-		}
+		} else if(mainController.get_digital(E_CONTROLLER_DIGITAL_B)) {
+      intakeHandler(-200);
+    } else if(mainController.get_digital(DIGITAL_UP)) {
+      liftHandler(50);
+    } else if (mainController.get_digital(DIGITAL_DOWN)) {
+      liftHandler(-50);
+    }
 		else {
 			intakeHandler(0);
-
-				if (mainController.get_digital(DIGITAL_UP)) {
-					liftHandler(50);
-					pros::delay(75);
-					liftHandler(0);
-				}
-
-				if (mainController.get_digital(DIGITAL_DOWN)) {
-					liftHandler(-50);
-					pros::delay(75);
-					liftHandler(0);
-				}
-
 		}
 
 //TRAY MACROS--------------------------------
@@ -89,25 +89,24 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 	if(mainController.get_digital(DIGITAL_L2)){ //low tower
 		tray.move_absolute(800, 80);
 		delay(100);
-		lift.move_absolute(200, -80);
+		lift.move_absolute(215, -80);
 	}
 
 	if(mainController.get_digital(DIGITAL_A)){ //resting position
 		tray.move_absolute(0, -50);
 		lift.move_absolute(0, -100);
 	}
-
 	if (mainController.get_digital(DIGITAL_Y)) {
-		intakeHandler(-200);
+		intakeHandler(-250);
 		trayHandler(120);
 
 		tray.move_absolute(750, 100);
 		delay(100);
-		lift.move_absolute(600, -100);
+		lift.move_absolute(350, -100);
 
 		pros::delay(700);
 		intakeHandler(0);
-		pros::delay(600);
+		pros::delay(750);
 		liftHandler(-130);
 		pros::delay(750);
 		trayHandler(-150);

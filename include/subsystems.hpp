@@ -9,7 +9,7 @@ extern Motor tray;
 extern Motor intakeR;
 extern Motor intakeL;
 extern Motor lift;
-void autonhandler();
+void autonhandler(int autonomousPreSet);
 void drive(int y, int r);
 void intakeHandler(int speed);
 void trayHandler(int trayPos);

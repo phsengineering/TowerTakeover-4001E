@@ -169,7 +169,7 @@ bin/auton.cpp.o: src/auton.cpp include/main.h include/api.h \
  include/okapi/api/units/QTorque.hpp include/okapi/api/units/QVolume.hpp \
  include/okapi/impl/util/timer.hpp include/pros/apix.h \
  include/pros/serial.h include/pros/serial.hpp include/subsystems.hpp \
- include/main.h src/globals.cpp src/globals.hpp src/subsystems.cpp
+ include/main.h
 
 include/main.h:
 
@@ -648,9 +648,3 @@ include/pros/serial.hpp:
 include/subsystems.hpp:
 
 include/main.h:
-
-src/globals.cpp:
-
-src/globals.hpp:
-
-src/subsystems.cpp:
