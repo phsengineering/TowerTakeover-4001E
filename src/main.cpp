@@ -24,10 +24,10 @@ void competition_initialize() {
     if(limit.get_value() == 1) {
         autonomousPreSet++;
     }
-    if (autonomousPreSet == 4) {
+    if (autonomousPreSet == 5) {
       autonomousPreSet = 0;
     }
-     std::string autons[4] = {"front blue", "front red", "back blue", "back red"};
+     std::string autons[5] = {"front blue (3 cube)", "front red (3 cube)", "back blue (6 cube)", "back red (6 cube)", "skills (5 cube stack, 2 cubes in towers)"};
      std::cout << autons[0];
       lcd::print(0, "%s", autons[autonomousPreSet]);
     pros::delay(100);

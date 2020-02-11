@@ -2,6 +2,8 @@
 #include "subsystems.hpp"
 #include "okapi/api.hpp"
 
+#include "skills.cpp"
+
 using namespace okapi;
 
 /*
@@ -57,8 +59,6 @@ void stopAll () {
 }
 
 void autonhandler(int autonomousPreSet) { // auton main
-
-  autonomousPreSet = 2;
 
   if (autonomousPreSet == 2 || autonomousPreSet == 3) {
   //Back Auton
@@ -267,6 +267,10 @@ pros::delay(500);
 
   autoDrive(0); // stop all & win auton
 
-  }
+}
+
+ if(autonomousPreSet == 4) {
+   skills();
+ }
 
 }
