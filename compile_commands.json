@@ -173,11 +173,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/auton.cpp.o",
-            "src\\auton.cpp"
+            "bin/main.cpp.o",
+            "src\\main.cpp"
         ],
         "directory": "C:\\Users\\lukeg\\vex\\asdf",
-        "file": "src\\auton.cpp"
+        "file": "src\\main.cpp"
     },
     {
         "arguments": [
@@ -209,10 +209,10 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/main.cpp.o",
-            "src\\main.cpp"
+            "bin/auton.cpp.o",
+            "src\\auton.cpp"
         ],
         "directory": "C:\\Users\\lukeg\\vex\\asdf",
-        "file": "src\\main.cpp"
+        "file": "src\\auton.cpp"
     }
 ]
