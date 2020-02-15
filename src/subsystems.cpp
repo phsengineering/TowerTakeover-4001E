@@ -7,10 +7,13 @@ Motor driveRB(20, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
 Motor driveLF(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
 Motor driveLB(16, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
 Motor tray(12, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-Motor intakeR(21, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
-Motor intakeL(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor intakeR(2, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+Motor intakeL(1, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor lift(4, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 bool debug = false;
+
+//Broken ports: 13, 10, 9, 7, 5, 21, 1?
+
 void drive(int y, int r)
 {
     //Scale up y and r from 127 to 12000

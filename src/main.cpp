@@ -24,13 +24,13 @@ void competition_initialize() {
     if(limit.get_value() == 1) {
         autonomousPreSet++;
     }
-    if (autonomousPreSet == 5) {
+    if (autonomousPreSet == 9) {
       autonomousPreSet = 0;
     }
-     std::string autons[7] = {"front blue (3 cube)", "front red (3 cube)", "back blue (5 cube)", "back red (5 cube)", "back blue (6 cube)", "back red (6 cube)", "prog skills"};
+     std::string autons[8] = {"front blue (3 cube)", "front red (3 cube)", "back blue (5 cube)", "back red (5 cube)", "back blue (6 cube)", "back red (6 cube)", "blue back prog skills", "red back prog skills"};
      std::cout << autons[0];
       lcd::print(0, "%s", autons[autonomousPreSet]);
-    pros::delay(100);
+    pros::delay(200);
    }
 
 }
@@ -107,7 +107,9 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		tray.move_absolute(0, -50);
 		lift.move_absolute(-10, -100);
     lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-	}
+	} else {
+    lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  }
 	if (mainController.get_digital(DIGITAL_Y)) {
     intakeHandler(-200);
 
