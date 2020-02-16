@@ -42,7 +42,7 @@ void autonomous() {
  void opcontrol() {
 	pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 	pros::lcd::initialize();
-	lift.set_brake_mode(MOTOR_BRAKE_HOLD);
+	lift.set_brake_mode(MOTOR_BRAKE_COAST);
   lift.move_absolute(-10,-100);
 	tray.set_brake_mode(MOTOR_BRAKE_COAST);
 	while(true) {
