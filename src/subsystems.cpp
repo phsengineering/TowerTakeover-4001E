@@ -26,8 +26,14 @@ void drive(int y, int r)
     driveRB.move_voltage(y - r);
 }
 void intakeHandler(int speed) {
-    intakeR.move_velocity(speed);
-    intakeL.move_velocity(speed);
+
+int right;
+int left;
+
+
+intakeR.move_velocity(speed);
+intakeL.move_velocity(speed);
+
 }
 void trayHandler(int trayPos) {
   tray.move_velocity(trayPos);

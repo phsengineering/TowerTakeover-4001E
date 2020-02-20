@@ -8,6 +8,16 @@ using namespace pros;
 int autonomousPreSet = 0;
 int state = 0;
 
+int ledState = 1;
+int buttonState;             // the current reading from the input pin
+int lastButtonState = 0;   // the previous reading from the input pin
+
+// the following variables are unsigned longs because the time, measured in
+// milliseconds, will quickly become a bigger number than can be stored in an int.
+unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
+unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
+
+
 void initialize() {
   delay(200);
 	pros::lcd::initialize();
@@ -21,16 +31,25 @@ void disabled() {}
 void competition_initialize() {
 
   while (1 == 1) {
+
     if(limit.get_value() == 1) {
         autonomousPreSet++;
+
+        if (autonomousPreSet == 8) {
+          autonomousPreSet = 0;
+        } else {
+         std::string autons[8] = {"front blue (3 cube)", "front red (3 cube)", "back blue (5 cube)", "back red (5 cube)", "back blue (6 cube)", "back red (6 cube)", "blue back prog skills", "red back prog skills"};
+         std::cout << autons[0];
+
+         for (int i = 0; i < 10; i++) {
+          lcd::print(i, "%s", autons[autonomousPreSet]);
+         }
+      }
+
+
     }
-    if (autonomousPreSet == 9) {
-      autonomousPreSet = 0;
-    }
-     std::string autons[8] = {"front blue (3 cube)", "front red (3 cube)", "back blue (5 cube)", "back red (5 cube)", "back blue (6 cube)", "back red (6 cube)", "blue back prog skills", "red back prog skills"};
-     std::cout << autons[0];
-      lcd::print(0, "%s", autons[autonomousPreSet]);
-    pros::delay(200);
+        pros::delay(200);
+
    }
 
 }
@@ -107,9 +126,7 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		tray.move_absolute(0, -50);
 		lift.move_absolute(-10, -100);
     lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-	} else {
-    lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-  }
+	} 
 	if (mainController.get_digital(DIGITAL_Y)) {
     intakeHandler(-200);
 
