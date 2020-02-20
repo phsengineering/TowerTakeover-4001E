@@ -126,7 +126,7 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 		tray.move_absolute(0, -50);
 		lift.move_absolute(-10, -100);
     lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-	} 
+	}
 	if (mainController.get_digital(DIGITAL_Y)) {
     intakeHandler(-200);
 
@@ -182,7 +182,6 @@ printf("Left encoder front: %d\n", driveLF.get_position());
 			pros::delay(1000);
 			trayHandler(0);
 			liftHandler(0);
-			lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 		} else if(mainController.get_digital(E_CONTROLLER_DIGITAL_B)) {
 			// macro down
 		}
