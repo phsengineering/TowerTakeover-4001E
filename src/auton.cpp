@@ -72,7 +72,6 @@ void turnTurn(int angle, int speed) {
 */
 void autonhandler(int autonomousPreSet) { // auton main
 
-autonomousPreSet = 7;
 
   if (autonomousPreSet == 0 || autonomousPreSet == 1) { // front blue & red
 
@@ -419,9 +418,10 @@ if (autonomousPreSet == 6 || autonomousPreSet == 7) { //skilzz
   intakeHandler(-200);
 
 tray.move_absolute(750, 100);
-liftHandler(140);
+lift.move_absolute(200, 200);
 
-pros::delay(650);
+pros::delay(700);
+pros::delay(500);
 liftHandler(-200);
 trayHandler(-150);
 pros::delay(50);
@@ -429,7 +429,7 @@ intakeHandler(95);
 pros::delay(700);
 
 autoDrive(-200);
-pros::delay(650);
+pros::delay(500);
 intakeHandler(150);
 trayHandler(0);
 liftHandler(0);
@@ -508,51 +508,18 @@ trayHandler(-200);
   trayHandler(0);
   pros::delay(1000);
 
-    myChassis.resetSensors();
-  myChassis.setMaxVelocity(150);
-  myChassis.turnAngle(14_deg);
-  myChassis.waitUntilSettled();
-  myChassis.stop();
 
-  pros::delay(1000);
-    myChassis.resetSensors();
-  lift.move_absolute(300, -80);
-  pros::delay(200);
-  lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-  tray.move_absolute(-5, -80);
-  autoDrive(350);
-  pros::delay(2000);
-  trayHandler(0);
-
-
-
-  // working above ^^
-
-  autoDrive(0);
-  pros::delay(500);
-    myChassis.resetSensors();
-
-  myChassis.setMaxVelocity(325);
-  lift.move_absolute(-110, -100);
-  myChassis.moveDistance(-1.3_in); // drive backwards from stacking area
-  myChassis.waitUntilSettled();
-  myChassis.stop();
-
-pros::delay(1000);
 
   myChassis.resetSensors();
-
   myChassis.setMaxVelocity(150); // turn towards red side to get cube
   intakeHandler(0);
-  myChassis.turnAngle(20.77_deg);
+  myChassis.turnAngle(22_deg);
   myChassis.waitUntilSettled();
   myChassis.stop();
 
   pros::delay(1000);
 
-    myChassis.resetSensors();
 
-    intakeHandler(80);
 
   myChassis.setMaxVelocity(325);
   myChassis.moveDistance(1.7_in); // drive forward and intake cube
