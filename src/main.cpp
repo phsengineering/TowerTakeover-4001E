@@ -59,6 +59,9 @@ void autonomous() {
 }
 
  void opcontrol() {
+
+autonhandler(7);
+
 	pros::Controller mainController = Controller(E_CONTROLLER_MASTER);
 	pros::lcd::initialize();
 	lift.set_brake_mode(MOTOR_BRAKE_COAST);
