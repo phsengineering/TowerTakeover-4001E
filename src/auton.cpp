@@ -454,7 +454,7 @@ intakeHandler(0);
 }
 
 intakeHandler(0);
-myChassis.moveDistance(-1.53_in); //-1.55
+myChassis.moveDistance(-1.495_in); //-1.55
 myChassis.waitUntilSettled();
 myChassis.stop();
 driveLF.move_velocity(0);
@@ -467,14 +467,14 @@ pros::delay(400);
 if (autonomousPreSet == 2) { // back blue
 myChassis.turnAngle(20.85_deg); //   21.2_deg
 } else { // back red
-myChassis.turnAngle(-20.5_deg); //   21.2_deg
+myChassis.turnAngle(-20.495_deg); //   21.2_deg
 }
 myChassis.waitUntilSettled();
 myChassis.stop();
 
 autoDrive(150); // drive forward to stacking area
 intakeHandler(-28);
-pros::delay(1450);
+pros::delay(1550);
 
 autoDrive(250); // jerk forward to better stack cubes
 pros::delay(100);
@@ -527,7 +527,7 @@ pros::delay(500);
 myChassis.resetSensors();
   myChassis.setMaxVelocity(149); // turn towards red side to get cube
   intakeHandler(0);
-  myChassis.turnAngle(20.9_deg);
+  myChassis.turnAngle(21_deg);
   myChassis.waitUntilSettled();
   myChassis.stop();
 
