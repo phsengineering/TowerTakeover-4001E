@@ -392,99 +392,82 @@ if (autonomousPreSet == 4 || autonomousPreSet == 5) { // back blue & red (6 cube
 
 if (autonomousPreSet == 6 || autonomousPreSet == 7) { //skilzz
 
-  intakeHandler(-200);
+  intakeHandler(-200); // flipout
+  tray.move_absolute(750, 100);
+  lift.move_absolute(200, 200);
+  pros::delay(700);
+  pros::delay(500);
+  liftHandler(-200);
+  trayHandler(-150);
+  pros::delay(50);
+  intakeHandler(95);
+  pros::delay(700);
 
-tray.move_absolute(750, 100);
-lift.move_absolute(200, 200);
-
-pros::delay(700);
-pros::delay(500);
-liftHandler(-200);
-trayHandler(-150);
-pros::delay(50);
-intakeHandler(95);
-pros::delay(700);
-
-autoDrive(-200);
-pros::delay(500);
-intakeHandler(150);
-trayHandler(0);
-liftHandler(0);
+  autoDrive(-200); // drive back to wall align
+  pros::delay(500);
+  intakeHandler(150);
+  trayHandler(0);
+  liftHandler(0);
 
 
-myChassis.moveDistance(1.67_in);
-myChassis.waitUntilSettled();
+  myChassis.moveDistance(1.67_in); // drive forward to intake cubes
+  myChassis.waitUntilSettled();
 
-if (autonomousPreSet == 2) { // back blue
-pros::delay(500);
-intakeHandler(300);
-pros::delay(100);
-intakeHandler(-300);
-pros::delay(50);
-intakeHandler(0);
-} else {  // back red
-pros::delay(500);
-intakeHandler(300);
-pros::delay(100);
-intakeHandler(-300);
-pros::delay(50);
-intakeHandler(0);
-}
+  pros::delay(500); // jerk intake to align cubes
+  intakeHandler(300);
+  pros::delay(100);
+  intakeHandler(-300);
+  pros::delay(50);
+  intakeHandler(0);
 
-intakeHandler(0);
-myChassis.moveDistance(-1.49_in); //-1.55
-myChassis.waitUntilSettled();
-myChassis.stop();
-driveLF.move_velocity(0);
-driveLB.move_velocity(0);
-driveRB.move_velocity(0);
-driveRF.move_velocity(0);
-intakeHandler(0);
-pros::delay(400);
+  intakeHandler(0);
+  myChassis.moveDistance(-1.49_in); // drive backwards with cubes
+  myChassis.waitUntilSettled();
+  myChassis.stop();
+  driveLF.move_velocity(0);
+  driveLB.move_velocity(0);
+  driveRB.move_velocity(0);
+  driveRF.move_velocity(0);
+  intakeHandler(0);
+  pros::delay(400);
 
-if (autonomousPreSet == 2) { // back blue
-myChassis.turnAngle(20.85_deg); //   21.2_deg
-} else { // back red
-myChassis.turnAngle(-20.85_deg); //   21.2_deg
-}
-myChassis.waitUntilSettled();
-myChassis.stop();
+  myChassis.turnAngle(-20.85_deg); //  turn towards scoring zone
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-autoDrive(150); // drive forward to stacking area
-intakeHandler(-28);
-pros::delay(1750);
+  autoDrive(150); // drive forward to stacking area
+  intakeHandler(-28);
+  pros::delay(1750);
 
-autoDrive(0); //stop drive
+  autoDrive(0); //stop drive
 
-intakeHandler(0);
-liftHandler(-200);
-trayHandler(100);
-pros::delay(3300);
-trayHandler(0);
-pros::delay(750);
-autoDrive(-60);
-pros::delay(700);
-intakeHandler(0);
-pros::delay(500);
+  intakeHandler(0); // stack
+  liftHandler(-200);
+  trayHandler(100);
+  pros::delay(3300);
+  trayHandler(0);
+  pros::delay(750);
+  autoDrive(-60);
+  pros::delay(700);
+  intakeHandler(0);
+  pros::delay(500);
 
-trayHandler(-200);
-liftHandler(0);
+  trayHandler(-200);
+  liftHandler(0);
 
-pros::delay(500);
+  pros::delay(500);
 
-
-
-myChassis.resetSensors();
+  myChassis.resetSensors();
   myChassis.moveDistance(-1.475_in); // drive backwards from stacking area
   myChassis.waitUntilSettled();
   myChassis.stop();
-trayHandler(-200);
+  trayHandler(-200);
   pros::delay(500);
   trayHandler(0);
   pros::delay(500);
 
-intakeHandler(0);
-pros::delay(500);
+  intakeHandler(0);
+  pros::delay(500);
 
 
 
@@ -492,226 +475,182 @@ pros::delay(500);
 /////////////////////////////////// going for 10 after this ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-myChassis.resetSensors();
+  myChassis.resetSensors();
   myChassis.setMaxVelocity(150); // turn towards red side to get cube
   intakeHandler(0);
   myChassis.turnAngle(21_deg);
   myChassis.waitUntilSettled();
   myChassis.stop();
 
-
-
-
   intakeHandler(150);
   myChassis.setMaxVelocity(325);
   myChassis.moveDistance(1.62_in); // drive forward and intake cube
   myChassis.waitUntilSettled();
   myChassis.stop();
-    intakeHandler(0);
+  intakeHandler(0);
 
   pros::delay(750);
 
   myChassis.resetSensors();
+  myChassis.setMaxVelocity(325);
+  myChassis.moveDistance(-0.9_in);// drive back to clear tower
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-myChassis.setMaxVelocity(325);
-myChassis.moveDistance(-0.9_in);// drive back to clear tower
-myChassis.waitUntilSettled();
-myChassis.stop();
+  pros::delay(500);
 
-pros::delay(500);
-
-
-    myChassis.resetSensors();
+  myChassis.resetSensors();
   lift.move_absolute(220, -80); // lift up arms
   pros::delay(200);
-    lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
   pros::delay(1000);
-
-
 
   myChassis.setMaxVelocity(325);
   myChassis.moveDistance(1_in); // drive forward to score tower
   myChassis.waitUntilSettled();
   myChassis.stop();
-    intakeHandler(0);
+  intakeHandler(0);
 
-pros::delay(1000);
+  pros::delay(1000);
   intakeHandler(-75); // get cube in tower by de-intaking
-pros::delay(800);
+  pros::delay(800);
 
   myChassis.resetSensors();
-
-myChassis.setMaxVelocity(325);
-myChassis.moveDistance(-1.59_in);// drive back to clear tower
-myChassis.waitUntilSettled();
-myChassis.stop();
-pros::delay(1000);
-
-
+  myChassis.setMaxVelocity(325);
+  myChassis.moveDistance(-1.59_in);// drive back to clear tower
+  myChassis.waitUntilSettled();
+  myChassis.stop();
+  pros::delay(1000);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// going for 15 after this ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  lift.set_brake_mode(MOTOR_BRAKE_COAST);
+  pros::delay(50);
+  liftHandler(-200);
+  pros::delay(500); // put arms down
+  liftHandler(0);
+  lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  pros::delay(500);
 
+  myChassis.resetSensors();
+  myChassis.setMaxVelocity(200);
+  intakeHandler(0);
+  myChassis.turnAngle(20.35_deg); // turn towards protected zone mid tower
 
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-
-lift.set_brake_mode(MOTOR_BRAKE_COAST);
-pros::delay(50);
-liftHandler(-200);
-pros::delay(500); // put arms down
-liftHandler(0);
-lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-pros::delay(500);
-
-myChassis.resetSensors();
-myChassis.setMaxVelocity(200);
-intakeHandler(0);
-myChassis.turnAngle(20.35_deg); // turn towards protected zone mid tower
-
-myChassis.waitUntilSettled();
-myChassis.stop();
-
-pros::delay(500);
-
-
-
+  pros::delay(500);
 
   intakeHandler(150);
   myChassis.setMaxVelocity(325);
   myChassis.moveDistance(1.52_in); // drive forward and intake cube
   myChassis.waitUntilSettled();
   myChassis.stop();
-    intakeHandler(0);
+  intakeHandler(0);
 
   pros::delay(750);
 
   myChassis.resetSensors();
-
-myChassis.setMaxVelocity(325);
-myChassis.moveDistance(-0.85_in);// drive back to clear tower
-myChassis.waitUntilSettled();
-myChassis.stop();
-
-pros::delay(500);
-
-
-    myChassis.resetSensors();
-    lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    lift.move_absolute(300, -80); // arms up
+  myChassis.setMaxVelocity(325);
+  myChassis.moveDistance(-0.85_in);// drive back to clear tower
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
   pros::delay(500);
 
+  myChassis.resetSensors();
+  lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  lift.move_absolute(300, -80); // arms up
 
+  pros::delay(500);
 
   myChassis.setMaxVelocity(325);
   myChassis.moveDistance(1.2_in); // drive forward to score tower
   intakeHandler(100);
   myChassis.waitUntilSettled();
   myChassis.stop();
-    intakeHandler(0);
+  intakeHandler(0);
 
-pros::delay(500);
+  pros::delay(500);
 
   intakeHandler(-75); // get cube in tower by de-intaking
 
   pros::delay(1000);
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// going for 20 after this ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  myChassis.resetSensors();
+  myChassis.setMaxVelocity(325);
+  myChassis.moveDistance(-0.90_in);// drive back from tower
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
+  intakeHandler(0);  // bring down arms
+  pros::delay(500);
+  lift.set_brake_mode(MOTOR_BRAKE_COAST);
+  pros::delay(50);
+  liftHandler(-200);
+  pros::delay(500);
+  liftHandler(0);
+  lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  pros::delay(500);
 
+  myChassis.resetSensors();
+  myChassis.setMaxVelocity(200); // turn towards line of cubes
+  myChassis.turnAngle(-20.35_deg);
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-myChassis.resetSensors();
-myChassis.setMaxVelocity(325);
-myChassis.moveDistance(-0.90_in);// drive back from tower
-myChassis.waitUntilSettled();
-myChassis.stop();
+  pros::delay(1000);
 
-intakeHandler(0);  // bring down arms
-pros::delay(500);
-lift.set_brake_mode(MOTOR_BRAKE_COAST);
-pros::delay(50);
-liftHandler(-200);
-pros::delay(500);
-liftHandler(0);
-lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-pros::delay(500);
+  intakeHandler(150);
 
+  myChassis.resetSensors();
+  myChassis.setMaxVelocity(325);
+  myChassis.moveDistance(1_in);// drive towards line of cubes and intake
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-myChassis.resetSensors();
-myChassis.setMaxVelocity(200); // turn towards line of cubes
-myChassis.turnAngle(-20.35_deg);
-myChassis.waitUntilSettled();
-myChassis.stop();
+  intakeHandler(0);
 
-pros::delay(1000);
+  pros::delay(1000);
 
-intakeHandler(150);
+  myChassis.resetSensors();
+  myChassis.setMaxVelocity(200); // turn towards alliance tower
+  myChassis.turnAngle(-20.35_deg);
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
-myChassis.resetSensors();
-myChassis.setMaxVelocity(325);
-myChassis.moveDistance(1_in);// drive towards line of cubes and intake
-myChassis.waitUntilSettled();
-myChassis.stop();
+  pros::delay(1000);
 
-intakeHandler(0);
+  myChassis.resetSensors();
+  lift.move_absolute(220, -80); // lift up arms
+  pros::delay(200);
+  lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
-pros::delay(1000);
+  pros::delay(1000);
 
+  myChassis.resetSensors();
+  myChassis.setMaxVelocity(325);
+  myChassis.moveDistance(2_in);// drive towards alliance tower
+  myChassis.waitUntilSettled();
+  myChassis.stop();
 
+  pros::delay(1000);
 
-myChassis.resetSensors();
-myChassis.setMaxVelocity(200); // turn towards alliance tower
-myChassis.turnAngle(-20.35_deg);
-myChassis.waitUntilSettled();
-myChassis.stop();
+  intakeHandler(-75); // de-intake to score
 
-pros::delay(1000);
+  pros::delay(1000);
 
-
-myChassis.resetSensors();
-lift.move_absolute(220, -80); // lift up arms
-pros::delay(200);
-lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-
-pros::delay(1000);
-
-
-myChassis.resetSensors();
-myChassis.setMaxVelocity(325);
-myChassis.moveDistance(2_in);// drive towards alliance tower
-myChassis.waitUntilSettled();
-myChassis.stop();
-
-pros::delay(1000);
-
-intakeHandler(-75); // de-intake to score
-
-pros::delay(1000);
-
-autoDrive(-200); // drive back from tower and win prog skills
-pros::delay(1000);
-autoDrive(0);
-
-
-
-
-
-
-
-
-
+  autoDrive(-200); // drive back from tower and win prog skills
+  pros::delay(1000);
+  autoDrive(0);
 }
 
 }
