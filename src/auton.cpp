@@ -27,15 +27,16 @@ auto profileController = AsyncControllerFactory::motionProfile(
 3 -> back red (5 cube)
 4 -> back blue (6 cube)
 5 -> back red (6 cube)
-6 -> prog skills
+6 -> prog skills blue (20 point, don't use)
+7 -> prog skills red (20 point, use this one)
 */
+
 double square = 0;
 double newSquare = 0;
 double newDistance = 0;
 double mult;
 
-
-void moveMove(double distance, double speed) {
+void moveMove(double distance, double speed) { // distance correction code that doesn't go past 6.5 inches
 
   newDistance = (distance + 0.361) / 3.74;
 
@@ -45,31 +46,7 @@ void moveMove(double distance, double speed) {
 
 }
 
-/*
-void turnTurn(int angle, int speed) {
-
-  myChassis.resetSensors();
-  myChassis.setMaxVelocity(speed);
-  myChassis.turnAngle(angle += "_deg");
-
-  myChassis.waitUntilSettled();
-  myChassis.stop();
-  myChassis.resetSensors();
-
-  pros::delay(50);
-
-  driveLF.move_velocity(0);
-  driveLB.move_velocity(0);
-  driveRB.move_velocity(0);
-  driveRF.move_velocity(0);
-}
-
-*/
 void autonhandler(int autonomousPreSet) { // auton main
-
-
-
-//moveMove(5, 200);
 
 autonomousPreSet = 7;
 
@@ -512,7 +489,7 @@ pros::delay(500);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////// going for 10 after this////////////////////////////////////////////
+/////////////////////////////////// going for 10 after this ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -578,7 +555,7 @@ pros::delay(1000);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////// going for 15 after this////////////////////////////////////////////
+/////////////////////////////////// going for 15 after this ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -588,15 +565,15 @@ pros::delay(1000);
 lift.set_brake_mode(MOTOR_BRAKE_COAST);
 pros::delay(50);
 liftHandler(-200);
-pros::delay(500);
+pros::delay(500); // put arms down
 liftHandler(0);
 lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
 pros::delay(500);
 
 myChassis.resetSensors();
-myChassis.setMaxVelocity(200); // turn towards red side to get cube
+myChassis.setMaxVelocity(200);
 intakeHandler(0);
-myChassis.turnAngle(20.35_deg);
+myChassis.turnAngle(20.35_deg); // turn towards protected zone mid tower
 
 myChassis.waitUntilSettled();
 myChassis.stop();
@@ -627,7 +604,7 @@ pros::delay(500);
 
     myChassis.resetSensors();
     lift.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    lift.move_absolute(300, -80);
+    lift.move_absolute(300, -80); // arms up
 
   pros::delay(500);
 
@@ -649,7 +626,7 @@ pros::delay(500);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////// going for 20 after this////////////////////////////////////////////
+/////////////////////////////////// going for 20 after this ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -674,7 +651,7 @@ pros::delay(500);
 
 myChassis.resetSensors();
 myChassis.setMaxVelocity(200); // turn towards line of cubes
-myChassis.turnAngle(20.35_deg);
+myChassis.turnAngle(-20.35_deg);
 myChassis.waitUntilSettled();
 myChassis.stop();
 
@@ -696,7 +673,7 @@ pros::delay(1000);
 
 myChassis.resetSensors();
 myChassis.setMaxVelocity(200); // turn towards alliance tower
-myChassis.turnAngle(20.35_deg);
+myChassis.turnAngle(-20.35_deg);
 myChassis.waitUntilSettled();
 myChassis.stop();
 
