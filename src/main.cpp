@@ -30,6 +30,8 @@ void disabled() {}
 
 void competition_initialize() {
 
+  lcd::print(7, "%s", "Bro Select and Auton");
+
   while (1 == 1) {
 
     if(limit.get_value() == 1) {
@@ -38,7 +40,7 @@ void competition_initialize() {
         if (autonomousPreSet == 8) {
           autonomousPreSet = 0;
         } else {
-         std::string autons[8] = {"front blue (3 cube)", "front red (3 cube)", "back blue (5 cube)", "back red (5 cube)", "back blue (6 cube)", "back red (6 cube)", "blue back prog skills", "red back prog skills"};
+         std::string autons[8] = {"front blue (3 cube)", "front red (3 cube)", "back blue (5 cube)", "back red (5 cube)", "back blue (6 cube)", "back red (6 cube)", "blue back prog skills (DONT USE THIS)", "red back prog skills (20 point)"};
          std::cout << autons[0];
 
          for (int i = 0; i < 10; i++) {
@@ -145,7 +147,7 @@ printf("Left encoder front: %d\n", driveLF.get_position());
     lift.set_brake_mode(MOTOR_BRAKE_COAST);
 	}
   if (mainController.get_digital(DIGITAL_LEFT)) {
-     autonhandler(autonomousPreSet);
+          autonhandler(7);
   }
 
   // macro brake brake
