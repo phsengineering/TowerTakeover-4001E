@@ -30,13 +30,12 @@ void disabled() {}
 
 void competition_initialize() {
 
-  lcd::print(7, "%s", "Bro Select and Auton");
-
+  lcd::print(7, "%s", "front blue (3 cube)");
+  autonomousPreSet = 0;
   while (1 == 1) {
 
     if(limit.get_value() == 1) {
         autonomousPreSet++;
-
         if (autonomousPreSet == 8) {
           autonomousPreSet = 0;
         } else {

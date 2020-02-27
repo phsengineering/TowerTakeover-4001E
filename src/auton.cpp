@@ -85,9 +85,9 @@ void autonhandler(int autonomousPreSet) { // auton main
     myChassis.setMaxVelocity(215);
 
     if (autonomousPreSet == 1) { // front red
-      myChassis.turnAngle(16.1_deg);
+      myChassis.turnAngle(16.5_deg);
     } else { // front blue
-      myChassis.turnAngle(-16.1_deg);
+      myChassis.turnAngle(-16.5_deg);
     }
     myChassis.waitUntilSettled();
     pros::delay(500);
@@ -175,18 +175,15 @@ trayHandler(0);
 liftHandler(0);
 
 
-myChassis.moveDistance(1.67_in);
+myChassis.moveDistance(1.68_in);
 myChassis.waitUntilSettled();
 
-if (autonomousPreSet == 2) { // back blue
-pros::delay(200);
-intakeHandler(75);
-pros::delay(200);
-} else {  // back red
-pros::delay(200);
-intakeHandler(75);
-pros::delay(200);
-}
+pros::delay(200); // jerk intake to align cubes
+intakeHandler(300);
+pros::delay(100);
+intakeHandler(-300);
+pros::delay(150);
+intakeHandler(0);
 
 intakeHandler(0);
 myChassis.moveDistance(-1.53_in); //-1.55
@@ -215,18 +212,20 @@ autoDrive(250); // jerk forward to better stack cubes
 pros::delay(100);
 autoDrive(0); //stop drive
 
+liftHandler(-200);
 trayHandler(210); // deploy tray to stack cubes
 pros::delay(400);
 intakeHandler(-65);
 pros::delay(1000);
 autoDrive(-60);
 intakeHandler(-70);
-trayHandler(-200);
 pros::delay(700);
 
 autoDrive(-200);
 pros::delay(250);
+trayHandler(-200);
 intakeHandler(0);
+liftHandler(0);
 
 pros::delay(1500);
 autoDrive(0); // stop all & win auton
@@ -416,8 +415,10 @@ if (autonomousPreSet == 6 || autonomousPreSet == 7) { //skilzz
   intakeHandler(300);
   pros::delay(50);
   intakeHandler(-300);
-  pros::delay(100);
-  intakeHandler(0);
+  pros::delay(200); // jerk intake to align cubes
+  intakeHandler(300);
+
+  pros::delay(1000);
 
   intakeHandler(0);
   myChassis.moveDistance(-1.49_in); // drive backwards with cubes
@@ -435,9 +436,11 @@ if (autonomousPreSet == 6 || autonomousPreSet == 7) { //skilzz
   myChassis.stop();
 
   autoDrive(150); // drive forward to stacking area
-  intakeHandler(-20);
-  pros::delay(2500);
-
+  intakeHandler(-15);
+  pros::delay(2000);
+  intakeHandler(25);
+  pros::delay(500);
+  intakeHandler(0);
   autoDrive(0); //stop drive
 
   intakeHandler(0); // stack
@@ -478,7 +481,7 @@ if (autonomousPreSet == 6 || autonomousPreSet == 7) { //skilzz
   myChassis.resetSensors();
   myChassis.setMaxVelocity(149); // turn towards red side to get cube
   intakeHandler(0);
-  myChassis.turnAngle(-21.2_deg); /////////////////////////turn//////////////
+  myChassis.turnAngle(-21.15_deg); /////////////////////////turn//////////////
   myChassis.waitUntilSettled();
   myChassis.stop();
 
