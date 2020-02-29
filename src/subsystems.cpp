@@ -7,12 +7,12 @@ Motor driveRB(20, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
 Motor driveLF(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
 Motor driveLB(16, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
 Motor tray(12, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-Motor intakeR(2, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+Motor intakeR(3, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 Motor intakeL(1, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor lift(8, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 bool debug = false;
 
-//Broken ports: 13, 10, 9, 7, 5, 21, 1?, 4?
+//Broken ports: 13, 10, 9, 7, 5, 21, 1?, 4?, 2
 
 void drive(int y, int r)
 {
