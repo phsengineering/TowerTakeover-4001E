@@ -1,7 +1,14 @@
 #include "main.h"
 #include "subsystems.hpp"
+#include <iostream>
+#include <string>
 
 using namespace pros;
+
+pros::ADIDigitalIn limit('H');
+
+int current;
+int first = 0;
 
 void initialize() {
 	pros::lcd::initialize();
@@ -10,7 +17,43 @@ void initialize() {
 
 void disabled() {}
 
-void competition_initialize() {}
+void competition_initialize() {
+
+	std::string autons[8] =
+  {
+   "Blue Protect [3 Cube]",
+   "Red Protect [3 cube]",
+   "Blue Unprotected [5 Cube]",
+   "Red Unprotected [5 Cube]",
+   "Blue Unprotected [6 Cube]",
+   "Red Unprotected [6 cube]",
+   "Blue Unprotected Programming Skills [20 Point]",
+   "Red Unprotected Programming Skills [20 Point]"
+  };
+  //cout << "Select an Autonomous Program"; // replace with pros lcd print
+  while (true) {
+
+		if(limit.get_value() == 1) {
+    	if (first == 0) {
+				for (int i = 0; i < 10; i++) {
+			 	lcd::print(i, "%s", autons[0]);
+			}
+      	first = 1;
+    	} else {
+      	current += 1;
+      	if (current == 8) {
+        	current = 0;
+      	}
+				for (int i = 0; i < 10; i++) {
+				 	lcd::print(i, "%s", autons[current]);
+				}
+    }
+  }
+	pros::delay(200);
+}
+
+
+}
 
 void autonomous() {}
 
@@ -28,10 +71,13 @@ void opcontrol() {
 		drive(analogY, analogX); // actual drive with these paramaters
 		/////////End of Drive///////////////
 
+
+
 		////////////Tray///////////////////
 		int trayPos = mainController.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		trayHandler(trayPos);
 		///////End of Tray/////////////////
+
 
 
 		////////////Intake//////////////////
@@ -43,6 +89,8 @@ void opcontrol() {
 			intakeHandler(-200);
 		}
 		////////End of Intake///////////////
+
+
 
 		////////////Lift////////////////////
 		if(mainController.get_digital(DIGITAL_L1)){ //mid tower
@@ -59,6 +107,8 @@ void opcontrol() {
 		}
 		////////////End Of Lift/////////////
 
+
+
 		////////////Flipout/////////////////
 		if (mainController.get_digital(DIGITAL_Y)) {
     	intakeHandler(-200);
@@ -72,5 +122,52 @@ void opcontrol() {
     	trayHandler(0);
 		}
 		///////End of Flipout///////////////
+
+
 	}
+}
+
+
+
+
+
+Motor rightFrontDrive(19, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
+Motor rightBackDrive(20, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
+Motor leftFrontDrive(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
+Motor leftBackDrive(16, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
+Motor tray(12, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor lift(4, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+Motor rightIntake(21, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+Motor leftIntake(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+
+//Broken ports: 13, 10, 9, 7, 5, 21, 1?, 4?, 2
+
+void drive(int analogY, int analogX) {
+  analogY = analogY * (12000 / 127);
+  analogX = analogX * (12000 / 127);
+
+  rightFrontDrive.move_voltage(analogY + analogX);
+  rightBackDrive.move_voltage(analogY + analogX);
+  leftFrontDrive.move_voltage(analogY - analogX);
+  leftBackDrive.move_voltage(analogY - analogX);
+}
+
+void intakeHandler(int speed) {
+  rightIntake.move_velocity(speed);
+  leftIntake.move_velocity(speed);
+}
+
+void trayHandler(int speed) {
+  tray.move_velocity(speed);
+}
+
+void liftHandler(int speed) {
+  lift.move_velocity(speed);
+}
+
+void autoDrive (int speed) {
+  rightFrontDrive.move_velocity(speed);
+  rightBackDrive.move_velocity(speed);
+  leftFrontDrive.move_velocity(speed);
+  leftBackDrive.move_velocity(speed);
 }
