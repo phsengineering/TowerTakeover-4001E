@@ -33,6 +33,7 @@ void competition_initialize() {
   //cout << "Select an Autonomous Program"; // replace with pros lcd print
   while (true) {
 
+
 		if(limit.get_value() == 1) {
     	if (first == 0) {
 				for (int i = 0; i < 10; i++) {
