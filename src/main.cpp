@@ -30,7 +30,7 @@ void competition_initialize() {
    "Blue Unprotected Programming Skills [20 Point]",
    "Red Unprotected Programming Skills [20 Point]"
   };
-  //cout << "Select an Autonomous Program"; // replace with pros lcd print
+lcd::print(1, "%s", "Select an Autonomous");
   while (true) {
 
 
@@ -132,12 +132,12 @@ void opcontrol() {
 
 
 
-Motor rightFrontDrive(19, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
-Motor rightBackDrive(20, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
-Motor leftFrontDrive(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
-Motor leftBackDrive(16, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
-Motor tray(12, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-Motor lift(4, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+Motor rightFrontDrive(19, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
+Motor rightBackDrive(20, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_ROTATIONS);
+Motor leftFrontDrive(15, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
+Motor leftBackDrive(16, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_ROTATIONS);
+Motor tray(12, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+Motor lift(3, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 Motor rightIntake(21, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 Motor leftIntake(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 
